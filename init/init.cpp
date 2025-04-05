@@ -693,7 +693,11 @@ static void SetKernelVersion() {
         LOG(ERROR) << "Could not parse the kernel version from uname";
         return;
     }
+
     SetProperty("ro.kernel.version", android::base::StringPrintf("%u.%u", major, minor));
+
+    bool is_modern = (major >= 5);
+    SetProperty("ro.sys.axion_is_modern_kernel", is_modern ? "true" : "false");
 }
 
 static void HandleSigtermSignal(const signalfd_siginfo& siginfo) {
