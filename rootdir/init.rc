@@ -1409,7 +1409,6 @@ on property:sys.snapshotctl.unmap=requested
     setprop sys.snapshotctl.unmap "finished"
 
 on boot 
-    write /sys/kernel/mm/lru_gen/enabled 5
     write /proc/sys/vm/extfrag_threshold 750
     write /proc/sys/vm/page_lock_unfairness 1
     write /sys/kernel/mm/transparent_hugepage/enabled "madvise"
@@ -1470,6 +1469,7 @@ on property:persist.sys.power_mode_perf=1
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
     write /dev/cpuctl/background/cpu.uclamp.min 100
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 1
+    write /sys/kernel/mm/lru_gen/enabled y
     
 on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_autogroup_enabled 1
@@ -1520,6 +1520,7 @@ on property:persist.sys.power_mode_perf=0
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 0
     write /dev/cpuctl/background/cpu.uclamp.min 0
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
+    write /sys/kernel/mm/lru_gen/enabled y
   
 on property:persist.sys.power_mode_limit_cpus=1
   write /dev/cpuset/top-app/cpus 0-3
