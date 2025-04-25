@@ -696,7 +696,7 @@ static void SetKernelVersion() {
 
     SetProperty("ro.kernel.version", android::base::StringPrintf("%u.%u", major, minor));
 
-    bool is_modern = (major >= 5);
+    bool is_modern = (major > 5) || (major == 5 && minor >= 14);
     SetProperty("ro.sys.axion_is_modern_kernel", is_modern ? "true" : "false");
 }
 
