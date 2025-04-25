@@ -1429,6 +1429,8 @@ on property:persist.sys.power_mode_perf=1
     write /proc/sys/kernel/sched_min_granularity_ns 300000
     write /proc/sys/kernel/sched_nr_migrate 128
     write /proc/sys/kernel/sched_migration_cost_ns 50000
+    write /proc/vendor_sched/min_granularity_ns 300000
+    write /proc/vendor_sched/latency_ns 3000000
     write /sys/block/sda/queue/nr_requests 512
     write /proc/sys/vm/vfs_cache_pressure 50
     write /proc/sys/kernel/sched_autogroup_enabled 0
@@ -1470,6 +1472,7 @@ on property:persist.sys.power_mode_perf=1
     write /dev/cpuctl/background/cpu.uclamp.min 100
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 1
     write /sys/kernel/mm/lru_gen/enabled y
+    write /proc/vendor_sched/enable_hrtick 1
     
 on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_autogroup_enabled 1
@@ -1481,6 +1484,8 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_nr_migrate 4
     write /proc/sys/kernel/sched_migration_cost_ns 5000000
     write /proc/sys/kernel/sched_rt_runtime_us 950000
+    write /proc/vendor_sched/min_granularity_ns 100000
+    write /proc/vendor_sched/latency_ns 1000000
     write /sys/block/sda/queue/nr_requests 64
     write /sys/block/sda/queue/iostats 0
     write /sys/block/sda/queue/add_random 0
@@ -1521,6 +1526,7 @@ on property:persist.sys.power_mode_perf=0
     write /dev/cpuctl/background/cpu.uclamp.min 0
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
     write /sys/kernel/mm/lru_gen/enabled y
+    write /proc/vendor_sched/enable_hrtick 0
   
 on property:persist.sys.power_mode_limit_cpus=1
   write /dev/cpuset/top-app/cpus 0-3
