@@ -1420,6 +1420,10 @@ on boot
     write /proc/sys/vm/dirty_expire_centisecs 3000
     write /proc/sys/vm/dirty_writeback_centisecs 3000
     write /proc/sys/kernel/sched_rr_timeslice_ms 1
+
+    # Change sched lib affinity
+    write /proc/vendor_sched/sched_lib_name libunity.so
+    write /proc/vendor_sched/sched_lib_mask_out 0x1f0
     
 on property:persist.sys.power_mode_perf=1
     write /proc/sys/kernel/sched_tunable_scaling 0
