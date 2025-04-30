@@ -1452,26 +1452,47 @@ on property:persist.sys.power_mode_perf=1
     write /proc/sys/vm/swappiness 60
     write /sys/block/sda/queue/iostats 0
     write /sys/block/sda/queue/add_random 0
+
+    # if performance governor is not available
+    # pixels
+    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_scale_pow 1
     write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/up_rate_limit_us 0
-    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu1/cpufreq/sched_pixel/up_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu2/cpufreq/sched_pixel/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/up_rate_limit_us 0
-    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/down_rate_limit_us 0
     write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/up_rate_limit_us 0
-    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu5/cpufreq/sched_pixel/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/up_rate_limit_us 0
-    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/down_rate_limit_us 0
     write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/up_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu8/cpufreq/sched_pixel/up_rate_limit_us 0
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu1/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu2/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu5/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/down_rate_limit_us 0
     write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu8/cpufreq/sched_pixel/down_rate_limit_us 0
+
     write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu1/cpufreq/schedutil/up_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu1/cpufreq/schedutil/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us 0
     write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/down_rate_limit_us 0
     write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu5/cpufreq/schedutil/up_rate_limit_us 0
+    write /sys/devices/system/cpu/cpu5/cpufreq/schedutil/down_rate_limit_us 0
     write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/down_rate_limit_us 0
     write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/down_rate_limit_us 0
+
     write /proc/sys/kernel/sched_pelt_multiplier 1
     write /proc/sys/kernel/sched_util_clamp_min 1024
     write /dev/cpuctl/system/cpu.uclamp.min 100
@@ -1486,6 +1507,16 @@ on property:persist.sys.power_mode_perf=1
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 1
     write /sys/kernel/mm/lru_gen/enabled y
     write /proc/vendor_sched/enable_hrtick 1
+    
+    # CPU core opt
+    write /dev/cpuset/top-app/cpus 0-7
+    write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+    write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+    write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+    write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
     
 on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_autogroup_enabled 1
@@ -1506,26 +1537,6 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/dirty_background_ratio 3
     write /proc/sys/vm/dirty_ratio 30
     write /proc/sys/vm/swappiness 100
-    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/down_rate_limit_us 2000
     write /proc/sys/kernel/sched_pelt_multiplier 4
     write /proc/sys/kernel/sched_util_clamp_min 128
     write /dev/cpuctl/system/cpu.uclamp.min 0
@@ -1540,26 +1551,68 @@ on property:persist.sys.power_mode_perf=0
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
     write /sys/kernel/mm/lru_gen/enabled y
     write /proc/vendor_sched/enable_hrtick 0
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/down_rate_limit_us 2000
+    
+    # pixels
+    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_scale_pow 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu1/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu2/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu5/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu8/cpufreq/sched_pixel/up_rate_limit_us 2000
+
+    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu1/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu2/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu5/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu8/cpufreq/sched_pixel/down_rate_limit_us 2000
+    
+    write /dev/cpuset/top-app/cpus 0-7
+    write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/camera-daemon/cpus 0-7
+    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
+    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-5}
+    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
   
 on property:persist.sys.power_mode_limit_cpus=1
   write /dev/cpuset/top-app/cpus 0-3
-  write /dev/cpuset/dex2oat/cpus 0-1
-  write /dev/cpuset/camera-daemon/cpus 0-1
-  write /dev/cpuset/foreground/cpus 0-1
-  write /dev/cpuset/foreground_window/cpus 0-1
-  write /dev/cpuset/restricted/cpus 0-1
-  write /dev/cpuset/background/cpus 0-1
-  write /dev/cpuset/system-background/cpus 0-1
+  write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+  write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+  write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+  write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+  write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+  write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+  write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
 
 on property:persist.sys.power_mode_limit_cpus=0
   write /dev/cpuset/top-app/cpus 0-7
-  write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_small:-0-3}
+  write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_bg:-0-2}
   write /dev/cpuset/camera-daemon/cpus 0-7
-  write /dev/cpuset/foreground/cpus 0-5
-  write /dev/cpuset/foreground_window/cpus 0-5
-  write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_small:-0-3}
-  write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_small:-0-3}
-  write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_small:-0-3}
+  write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
+  write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-5}
+  write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_bg:-0-2}
+  write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+  write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
   
 on property:persist.sys.is_upgrade=1
   exec - system system -- /bin/rm -rf /data/system/package_cache
