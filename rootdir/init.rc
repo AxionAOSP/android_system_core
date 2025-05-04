@@ -1518,6 +1518,18 @@ on property:persist.sys.power_mode_perf=1
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
     write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
     
+    # Performance CPU shares
+    write /dev/cpuctl/background/cpu.shares 128
+    write /dev/cpuctl/system-background/cpu.shares 128
+    write /dev/cpuctl/dex2oat/cpu.shares 128
+    write /dev/cpuctl/system/cpu.shares 128
+    # We only have system and background groups holding tasks and the groups below are empty
+    write /dev/cpuctl/camera-daemon/cpu.shares 20480
+    write /dev/cpuctl/foreground/cpu.shares 10240
+    write /dev/cpuctl/nnapi-hal/cpu.shares 10240
+    write /dev/cpuctl/rt/cpu.shares 20480
+    write /dev/cpuctl/top-app/cpu.shares 20480
+    
 on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_autogroup_enabled 1
     write /proc/sys/kernel/sched_tunable_scaling 0
@@ -1593,6 +1605,18 @@ on property:persist.sys.power_mode_perf=0
     write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    
+    # Normal CPU shares
+    write /dev/cpuctl/background/cpu.shares 256
+    write /dev/cpuctl/system-background/cpu.shares 512
+    write /dev/cpuctl/dex2oat/cpu.shares 512
+    write /dev/cpuctl/system/cpu.shares 512
+    # We only have system and background groups holding tasks and the groups below are empty
+    write /dev/cpuctl/camera-daemon/cpu.shares 20480
+    write /dev/cpuctl/foreground/cpu.shares 15360
+    write /dev/cpuctl/nnapi-hal/cpu.shares 20480
+    write /dev/cpuctl/rt/cpu.shares 20480
+    write /dev/cpuctl/top-app/cpu.shares 20480
   
 on property:persist.sys.power_mode_limit_cpus=1
   write /dev/cpuset/top-app/cpus 0-3
