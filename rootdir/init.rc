@@ -1550,7 +1550,7 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/dirty_ratio 30
     write /proc/sys/vm/swappiness 100
     write /proc/sys/kernel/sched_pelt_multiplier 4
-    write /proc/sys/kernel/sched_util_clamp_min 128
+    write /proc/sys/kernel/sched_util_clamp_min 0
     write /dev/cpuctl/system/cpu.uclamp.min 0
     write /dev/cpuctl/system/cpu.uclamp.latency_sensitive 0
     write /dev/cpuctl/system-background/cpu.uclamp.min 0
