@@ -1564,28 +1564,28 @@ on property:persist.sys.power_mode_perf=0
     write /sys/kernel/mm/lru_gen/enabled y
     write /proc/vendor_sched/enable_hrtick 0
 
-    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 5000
     write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/up_rate_limit_us 5000
     write /sys/devices/system/cpu/cpu3/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us 5000
     write /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/up_rate_limit_us 5000
     write /sys/devices/system/cpu/cpu6/cpufreq/schedutil/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us 5000
     write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/down_rate_limit_us 2000
     
     # pixels
     write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_scale_pow 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu1/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu2/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu5/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu8/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu1/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu2/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu3/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu4/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu5/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/up_rate_limit_us 5000
+    write /sys/devices/system/cpu/cpu8/cpufreq/sched_pixel/up_rate_limit_us 5000
 
     write /sys/devices/system/cpu/cpu0/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /sys/devices/system/cpu/cpu1/cpufreq/sched_pixel/down_rate_limit_us 2000
