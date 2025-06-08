@@ -1493,7 +1493,7 @@ on property:persist.sys.power_mode_perf=1
     write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/up_rate_limit_us 0
     write /sys/devices/system/cpu/cpu7/cpufreq/schedutil/down_rate_limit_us 0
 
-    write /proc/sys/kernel/sched_pelt_multiplier 1
+    write /proc/sys/kernel/sched_pelt_multiplier 4
     write /proc/sys/kernel/sched_util_clamp_min 1024
     write /dev/cpuctl/system/cpu.uclamp.min 0
     write /dev/cpuctl/system/cpu.uclamp.latency_sensitive 0
@@ -1549,7 +1549,7 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/dirty_background_ratio 3
     write /proc/sys/vm/dirty_ratio 30
     write /proc/sys/vm/swappiness 100
-    write /proc/sys/kernel/sched_pelt_multiplier 4
+    write /proc/sys/kernel/sched_pelt_multiplier 1
     write /proc/sys/kernel/sched_util_clamp_min 0
     write /dev/cpuctl/system/cpu.uclamp.min 0
     write /dev/cpuctl/system/cpu.uclamp.latency_sensitive 0
