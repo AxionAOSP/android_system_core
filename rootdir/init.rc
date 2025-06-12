@@ -1621,11 +1621,11 @@ on property:persist.sys.power_mode_perf=0
     write /dev/cpuctl/top-app/cpu.shares 20480
   
 on property:persist.sys.power_mode_limit_cpus=1
-  write /dev/cpuset/top-app/cpus 0-3
+  write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_limit_ui:-0-3}
   write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
   write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-  write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-  write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
+  write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_limit_ui:-0-3}
+  write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_limit_ui:-0-3}
   write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
   write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
   write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
