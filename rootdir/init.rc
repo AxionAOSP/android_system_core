@@ -445,6 +445,24 @@ on init
     chmod 0775 /dev/cpuset/background
     chmod 0775 /dev/cpuset/foreground_window
 
+    # Boost framework
+    chmod 0775 /dev/cpuset/top-app/cpus
+    chmod 0775 /dev/cpuset/dex2oat/cpus
+    chmod 0775 /dev/cpuset/camera-daemon/cpus
+    chmod 0775 /dev/cpuset/foreground/cpus
+    chmod 0775 /dev/cpuset/foreground_window/cpus
+    chmod 0775 /dev/cpuset/restricted/cpus
+    chmod 0775 /dev/cpuset/system-background/cpus
+    chmod 0775 /dev/cpuset/background/cpus
+    chown system system /dev/cpuset/top-app/cpus
+    chown system system /dev/cpuset/dex2oat/cpus
+    chown system system /dev/cpuset/camera-daemon/cpus
+    chown system system /dev/cpuset/foreground/cpus
+    chown system system /dev/cpuset/foreground_window/cpus
+    chown system system /dev/cpuset/restricted/cpus
+    chown system system /dev/cpuset/system-background/cpus
+    chown system system /dev/cpuset/background/cpus
+
     chmod 0664 /dev/cpuset/foreground/tasks
     chmod 0664 /dev/cpuset/foreground_window/tasks
     chmod 0664 /dev/cpuset/background/tasks
@@ -1427,7 +1445,18 @@ on boot
     
     # Disable util-awareness for mids and bigs
     write /proc/vendor_sched/teo_util_threshold "2 1024 1024"
-    
+
+on property:sys.boot_completed=1
+    # write initial cpuset
+    write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
+    write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
+    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
+    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-5}
+    write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+
 on property:persist.sys.power_mode_perf=1
     write /proc/sys/kernel/sched_latency_ns 20000000
     write /proc/sys/kernel/sched_wakeup_granularity_ns 10000000
@@ -1498,16 +1527,6 @@ on property:persist.sys.power_mode_perf=1
     write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
     write /sys/kernel/mm/lru_gen/enabled y
     write /proc/vendor_sched/enable_hrtick 1
-    
-    # CPU core opt
-    write /dev/cpuset/top-app/cpus 0-7
-    write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-    write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-    write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-    write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
     
     # Performance CPU shares
     write /dev/cpuctl/background/cpu.shares 128
@@ -1583,16 +1602,7 @@ on property:persist.sys.power_mode_perf=0
     write /sys/devices/system/cpu/cpu6/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /sys/devices/system/cpu/cpu7/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /sys/devices/system/cpu/cpu8/cpufreq/sched_pixel/down_rate_limit_us 2000
-    
-    write /dev/cpuset/top-app/cpus 0-7
-    write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_bg:-0-2}
-    write /dev/cpuset/camera-daemon/cpus 0-7
-    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
-    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-5}
-    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_bg:-0-2}
-    write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
-    write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
-    
+
     # Normal CPU shares
     write /dev/cpuctl/background/cpu.shares 256
     write /dev/cpuctl/system-background/cpu.shares 512
@@ -1604,26 +1614,6 @@ on property:persist.sys.power_mode_perf=0
     write /dev/cpuctl/nnapi-hal/cpu.shares 20480
     write /dev/cpuctl/rt/cpu.shares 20480
     write /dev/cpuctl/top-app/cpu.shares 20480
-  
-on property:persist.sys.power_mode_limit_cpus=1
-  write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_limit_ui:-0-3}
-  write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-  write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-  write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_limit_ui:-0-3}
-  write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_limit_ui:-0-3}
-  write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-  write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-  write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_limit_bg:-0-1}
-
-on property:persist.sys.power_mode_limit_cpus=0
-  write /dev/cpuset/top-app/cpus 0-7
-  write /dev/cpuset/dex2oat/cpus ${persist.sys.axion_cpu_bg:-0-2}
-  write /dev/cpuset/camera-daemon/cpus 0-7
-  write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
-  write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-5}
-  write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_bg:-0-2}
-  write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
-  write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
   
 on property:persist.sys.is_upgrade=1
   exec - system system -- /bin/rm -rf /data/system/package_cache
