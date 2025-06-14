@@ -1432,7 +1432,7 @@ on boot
     write /sys/block/sda/queue/read_ahead_kb 64
     write /proc/sys/vm/dirty_expire_centisecs 3000
     write /proc/sys/vm/dirty_writeback_centisecs 3000
-    write /proc/sys/kernel/sched_rr_timeslice_ms 1
+    write /proc/sys/kernel/sched_rr_timeslice_ms 100
 
     # Change sched lib affinity
     write /proc/vendor_sched/sched_lib_name "UnityMain,libunity.so"
