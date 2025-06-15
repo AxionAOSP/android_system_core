@@ -1484,6 +1484,12 @@ on property:persist.sys.power_mode_perf=1
 
     setprop persist.sys.scaling_governor "sched_pixel"
     setprop persist.sys.cfs_rate_limit_us 0
+    
+    setprop persist.sys.scaling_governor "sugov_ext"
+    setprop persist.sys.cfs_rate_limit_us 0
+
+    # apply last for devices with performance governor disabled
+    setprop persist.sys.scaling_governor "performance"
 
 on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_nr_migrate 2
@@ -1510,6 +1516,9 @@ on property:persist.sys.power_mode_perf=0
     setprop persist.sys.cfs_rate_limit_us 2000
 
     setprop persist.sys.scaling_governor "sched_pixel"
+    setprop persist.sys.cfs_rate_limit_us 2000
+    
+    setprop persist.sys.scaling_governor "sugov_ext"
     setprop persist.sys.cfs_rate_limit_us 2000
   
 on property:sys.boot_completed=1 && property:persist.sys.is_upgrade=1
