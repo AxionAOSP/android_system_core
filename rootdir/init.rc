@@ -1487,18 +1487,6 @@ on property:persist.sys.power_mode_perf=1
     setprop persist.sys.scaling_governor "sched_pixel"
     setprop persist.sys.cfs_rate_limit_us 0
 
-    # Performance CPU shares
-    write /dev/cpuctl/background/cpu.shares 128
-    write /dev/cpuctl/system-background/cpu.shares 128
-    write /dev/cpuctl/dex2oat/cpu.shares 128
-    write /dev/cpuctl/system/cpu.shares 128
-    # We only have system and background groups holding tasks and the groups below are empty
-    write /dev/cpuctl/camera-daemon/cpu.shares 20480
-    write /dev/cpuctl/foreground/cpu.shares 10240
-    write /dev/cpuctl/nnapi-hal/cpu.shares 10240
-    write /dev/cpuctl/rt/cpu.shares 20480
-    write /dev/cpuctl/top-app/cpu.shares 20480
-
 on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_nr_migrate 2
     write /proc/vendor_sched/max_load_balance_interval 100
@@ -1527,18 +1515,6 @@ on property:persist.sys.power_mode_perf=0
 
     setprop persist.sys.scaling_governor "sched_pixel"
     setprop persist.sys.cfs_rate_limit_us 2000
-
-    # Normal CPU shares
-    write /dev/cpuctl/background/cpu.shares 256
-    write /dev/cpuctl/system-background/cpu.shares 512
-    write /dev/cpuctl/dex2oat/cpu.shares 512
-    write /dev/cpuctl/system/cpu.shares 512
-    # We only have system and background groups holding tasks and the groups below are empty
-    write /dev/cpuctl/camera-daemon/cpu.shares 20480
-    write /dev/cpuctl/foreground/cpu.shares 15360
-    write /dev/cpuctl/nnapi-hal/cpu.shares 20480
-    write /dev/cpuctl/rt/cpu.shares 20480
-    write /dev/cpuctl/top-app/cpu.shares 20480
   
 on property:sys.boot_completed=1 && property:persist.sys.is_upgrade=1
   exec - system system -- /bin/rm -rf /data/system/package_cache
@@ -1568,6 +1544,17 @@ on property:persist.sys.cfs_temp_control=0
     write /proc/sys/kernel/sched_pelt_multiplier 2
     write /proc/sys/kernel/sched_migration_cost_ns 200000
 
+    # Normal CPU shares
+    write /dev/cpuctl/background/cpu.shares 256
+    write /dev/cpuctl/system-background/cpu.shares 256
+    write /dev/cpuctl/dex2oat/cpu.shares 256
+    write /dev/cpuctl/system/cpu.shares 256
+    write /dev/cpuctl/camera-daemon/cpu.shares 20480
+    write /dev/cpuctl/foreground/cpu.shares 15360
+    write /dev/cpuctl/nnapi-hal/cpu.shares 20480
+    write /dev/cpuctl/rt/cpu.shares 20480
+    write /dev/cpuctl/top-app/cpu.shares 20480
+
 #add for control device temperature by adjustment CFS scheduling strategy new value
 on property:persist.sys.cfs_temp_control=1
     write /proc/sys/kernel/sched_wakeup_granularity_ns 1000000000
@@ -1577,6 +1564,17 @@ on property:persist.sys.cfs_temp_control=1
     write /proc/vendor_sched/min_granularity_ns 300000
     write /proc/sys/kernel/sched_pelt_multiplier 1
     write /proc/sys/kernel/sched_migration_cost_ns 15000000
+
+    # Throttled CPU shares
+    write /dev/cpuctl/background/cpu.shares 128
+    write /dev/cpuctl/system-background/cpu.shares 128
+    write /dev/cpuctl/dex2oat/cpu.shares 128
+    write /dev/cpuctl/system/cpu.shares 128
+    write /dev/cpuctl/camera-daemon/cpu.shares 20480
+    write /dev/cpuctl/foreground/cpu.shares 8192
+    write /dev/cpuctl/nnapi-hal/cpu.shares 8192
+    write /dev/cpuctl/rt/cpu.shares 15360
+    write /dev/cpuctl/top-app/cpu.shares 20480
 
 on property:persist.sys.scaling_governor=*
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ${persist.sys.scaling_governor}
