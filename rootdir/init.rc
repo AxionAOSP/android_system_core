@@ -1465,19 +1465,11 @@ on property:persist.sys.power_mode_perf=1
     write /proc/sys/vm/dirty_ratio 50
     write /sys/block/sda/queue/iostats 0
     write /sys/block/sda/queue/add_random 0
-
-    write /proc/sys/kernel/sched_util_clamp_min 1024
-    write /dev/cpuctl/system/cpu.uclamp.min 0
-    write /dev/cpuctl/system/cpu.uclamp.latency_sensitive 0
-    write /dev/cpuctl/system-background/cpu.uclamp.min 0
-    write /dev/cpuctl/system-background/cpu.uclamp.latency_sensitive 0
-    write /dev/cpuctl/foreground/cpu.uclamp.min 0
-    write /dev/cpuctl/foreground/cpu.uclamp.latency_sensitive 0
-    write /dev/cpuctl/top-app/cpu.uclamp.min 256
-    write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
-    write /dev/cpuctl/background/cpu.uclamp.min 0
-    write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
     write /sys/kernel/mm/lru_gen/enabled y
+
+    write /proc/sys/kernel/sched_util_clamp_min 320
+    write /dev/cpuctl/top-app/cpu.uclamp.min 320
+    write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
 
     setprop persist.sys.scaling_governor "schedutil"
     setprop persist.sys.cfs_rate_limit_us 0
@@ -1499,18 +1491,11 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/vfs_cache_pressure 200
     write /proc/sys/vm/dirty_background_ratio 3
     write /proc/sys/vm/dirty_ratio 10
+    write /sys/kernel/mm/lru_gen/enabled y
+
     write /proc/sys/kernel/sched_util_clamp_min 0
-    write /dev/cpuctl/system/cpu.uclamp.min 0
-    write /dev/cpuctl/system/cpu.uclamp.latency_sensitive 0
-    write /dev/cpuctl/system-background/cpu.uclamp.min 0
-    write /dev/cpuctl/system-background/cpu.uclamp.latency_sensitive 0
-    write /dev/cpuctl/foreground/cpu.uclamp.min 0
-    write /dev/cpuctl/foreground/cpu.uclamp.latency_sensitive 0
     write /dev/cpuctl/top-app/cpu.uclamp.min 0
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 0
-    write /dev/cpuctl/background/cpu.uclamp.min 0
-    write /dev/cpuctl/background/cpu.uclamp.latency_sensitive 0
-    write /sys/kernel/mm/lru_gen/enabled y
 
     setprop persist.sys.scaling_governor "schedutil"
     setprop persist.sys.cfs_rate_limit_us 2000
