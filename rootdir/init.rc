@@ -1538,6 +1538,8 @@ on property:persist.sys.power_mode_perf=1
     write /proc/sys/kernel/sched_util_clamp_min 320
     write /dev/cpuctl/top-app/cpu.uclamp.min 320
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
+    
+    setprop persist.sys.scaling_governor "walt"
 
     setprop persist.sys.scaling_governor "schedutil"
     setprop persist.sys.cfs_rate_limit_us 0
@@ -1561,6 +1563,8 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_util_clamp_min 0
     write /dev/cpuctl/top-app/cpu.uclamp.min 0
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 0
+    
+    setprop persist.sys.scaling_governor "walt"
 
     setprop persist.sys.scaling_governor "schedutil"
     setprop persist.sys.cfs_rate_limit_us 2000
