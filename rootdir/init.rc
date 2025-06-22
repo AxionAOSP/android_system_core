@@ -424,7 +424,7 @@ on init
     chmod 0664 /dev/cpuctl/audio-app/cgroup.procs
     write /dev/cpuctl/audio-app/cpu.uclamp.min 1
     write /dev/cpuctl/audio-app/cpu.uclamp.latency_sensitive 1
-    write /dev/cpuctl/audio-app/cpu.shares 15360
+    write /dev/cpuctl/audio-app/cpu.shares 20480
 
     # Display
     mkdir /dev/cpuset/display
@@ -1608,7 +1608,7 @@ on property:persist.sys.cfs_temp_control=0
     write /dev/cpuctl/dex2oat/cpu.shares 256
     write /dev/cpuctl/system/cpu.shares 256
     write /dev/cpuctl/camera-daemon/cpu.shares 20480
-    write /dev/cpuctl/foreground/cpu.shares 15360
+    write /dev/cpuctl/foreground/cpu.shares 20480
     write /dev/cpuctl/nnapi-hal/cpu.shares 20480
     write /dev/cpuctl/rt/cpu.shares 20480
     write /dev/cpuctl/top-app/cpu.shares 20480
