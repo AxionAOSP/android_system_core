@@ -1538,17 +1538,6 @@ on property:persist.sys.power_mode_perf=1
     write /proc/sys/kernel/sched_util_clamp_min 320
     write /dev/cpuctl/top-app/cpu.uclamp.min 320
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
-    
-    setprop persist.sys.scaling_governor "walt"
-
-    setprop persist.sys.scaling_governor "schedutil"
-    setprop persist.sys.cfs_rate_limit_us 0
-
-    setprop persist.sys.scaling_governor "sched_pixel"
-    setprop persist.sys.cfs_rate_limit_us 0
-
-    # apply last for devices with performance governor disabled
-    setprop persist.sys.scaling_governor "performance"
 
 on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_nr_migrate 2
@@ -1563,14 +1552,6 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/kernel/sched_util_clamp_min 0
     write /dev/cpuctl/top-app/cpu.uclamp.min 0
     write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 0
-    
-    setprop persist.sys.scaling_governor "walt"
-
-    setprop persist.sys.scaling_governor "schedutil"
-    setprop persist.sys.cfs_rate_limit_us 2000
-
-    setprop persist.sys.scaling_governor "sched_pixel"
-    setprop persist.sys.cfs_rate_limit_us 2000
   
 on property:sys.boot_completed=1 && property:persist.sys.is_upgrade=1
   exec - system system -- /bin/rm -rf /data/system/package_cache
@@ -1635,25 +1616,3 @@ on property:persist.sys.cfs_temp_control=1
     write /dev/cpuctl/nnapi-hal/cpu.shares 8192
     write /dev/cpuctl/rt/cpu.shares 15360
     write /dev/cpuctl/top-app/cpu.shares 20480
-
-on property:persist.sys.scaling_governor=*
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu5/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu7/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu8/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-
-on property:persist.sys.cfs_rate_limit_us=*
-    write /sys/devices/system/cpu/cpu0/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu1/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu2/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu3/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu4/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu5/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu6/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu7/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
-    write /sys/devices/system/cpu/cpu8/cpufreq/${persist.sys.scaling_governor}/up_rate_limit_us ${persist.sys.cfs_rate_limit_us:-2000}
