@@ -1521,8 +1521,8 @@ on property:sys.boot_completed=1
     write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
-    write /dev/cpuset/audio-app/cpus ${persist.sys.axion_cpu_limit_ui:-0-2}
-    write /dev/cpuset/display/cpus ${persist.sys.axion_cpu_big:-4-7}
+    write /dev/cpuset/audio-app/cpus ${persist.sys.axion_cpu_audio:-0-3}
+    write /dev/cpuset/display/cpus ${persist.sys.axion_cpu_display:-4-7}
     write /dev/cpuset/systemserver/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
 
 on property:persist.sys.power_mode_perf=1
