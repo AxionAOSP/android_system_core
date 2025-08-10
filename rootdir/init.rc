@@ -1462,6 +1462,24 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/dirty_ratio 10
     write /proc/sys/kernel/sched_rr_timeslice_ms 100
 
+on property:persist.sys.power_mode_perf=1 && property:persist.sys.dev_supports_perf_gov=true
+    setprop persist.sys.scaling_governor "performance"
+
+on property:persist.sys.power_mode_perf=0 && property:persist.sys.dev_supports_perf_gov=true
+    setprop persist.sys.scaling_governor ${persist.sys.default_scaling_gov}
+
+on property:persist.sys.scaling_governor=*
+    # this is ugly and should be applied per cluster but due to cpu architecture variations just do this for now. 
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu5/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu7/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu8/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+
 on property:sys.boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.battery_health_bypass_enabled=true
   write /sys/class/power_supply/battery/input_suspend 1
   write /sys/class/qcom-battery/input_suspend 1
