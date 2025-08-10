@@ -1396,6 +1396,22 @@ on property:ro.debuggable=1
 on init && property:ro.debuggable=1
     start console
 
+on boot 
+    write /proc/sys/vm/page_lock_unfairness 1
+    write /sys/kernel/mm/transparent_hugepage/enabled "madvise"
+    write /sys/kernel/mm/transparent_hugepage/khugepaged/defrag 0
+    write /sys/kernel/mm/transparent_hugepage/khugepaged/pages_to_scan 512
+    write /sys/kernel/mm/transparent_hugepage/shmem_enabled "advise"
+    write /sys/kernel/mm/transparent_hugepage/defrag "never"
+    # Change sched lib affinity
+    write /proc/vendor_sched/sched_lib_name "UnityMain,libunity.so"
+    write /proc/vendor_sched/prefer_idle_task_name "InputDispatcher,InputReader"
+    # Set priority task name and boost value
+    write /proc/vendor_sched/priority_task_name "ExoPlayer:Place"
+    write /proc/vendor_sched/priority_task_boost_value 742
+    # Disable util-awareness for mids and bigs
+    write /proc/vendor_sched/teo_util_threshold "2 1024 1024"
+
 # Multi-Gen LRU Experiment
 on property:persist.device_config.mglru_native.lru_gen_config=none
   write /sys/kernel/mm/lru_gen/enabled 0
