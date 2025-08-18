@@ -1462,6 +1462,10 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/dirty_ratio 10
     write /proc/sys/kernel/sched_rr_timeslice_ms 100
 
+# use performance mode boot receiver to make sure oem init writes doesnt override
+on property:persist.sys.power_mode_perf=* && property:persist.sys.mglru_enable=true
+  write /sys/kernel/mm/lru_gen/enabled 3
+
 on property:persist.sys.power_mode_perf=1 && property:persist.sys.dev_supports_perf_gov=true
     setprop persist.sys.scaling_governor "performance"
 
