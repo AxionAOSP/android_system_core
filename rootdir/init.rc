@@ -468,6 +468,10 @@ on init
     # make the PSI monitor accessible to others
     chown system system /proc/pressure/memory
     chmod 0664 /proc/pressure/memory
+    
+    # smart charge
+    chmod 0775 /sys/devices/platform/google,charger/charge_start_level
+    chmod 0775 /sys/devices/platform/google,charger/charge_stop_level
 
     mount bpf bpf /sys/fs/bpf nodev noexec nosuid
 
@@ -1448,6 +1452,9 @@ on property:persist.sys.axion_boot_completed=*
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /sys/kernel/mm/lru_gen/enabled 3
     setprop persist.sys.power_mode_perf ${persist.sys.power_mode_perf}
+    
+    # reset bypass
+    setprop persist.sys.gs_charge_bypass_active 0
 
 on property:persist.sys.power_mode_perf=1
     write /proc/sys/kernel/sched_pelt_multiplier 4
@@ -1481,10 +1488,16 @@ on property:persist.sys.scaling_governor=*
     write /sys/devices/system/cpu/cpu7/cpufreq/scaling_governor ${persist.sys.scaling_governor}
     write /sys/devices/system/cpu/cpu8/cpufreq/scaling_governor ${persist.sys.scaling_governor}
 
-on property:sys.axion_boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.battery_health_bypass_enabled=true
-  write /sys/class/power_supply/battery/input_suspend 1
-  write /sys/class/qcom-battery/input_suspend 1
+on property:sys.axion_boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.gs_charge_bypass_active=*
+  write /sys/class/power_supply/battery/input_suspend ${persist.sys.gs_charge_bypass_active}
+  write /sys/class/qcom-battery/input_suspend ${persist.sys.gs_charge_bypass_active}
+
+on property:sys.axion_boot_completed=1 && property:persist.sys.smart_charge_enabled=true
+  setprop persist.sys.smart_charge_level 80
   
-on property:sys.axion_boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.battery_health_bypass_enabled=false
-  write /sys/class/power_supply/battery/input_suspend 0
-  write /sys/class/qcom-battery/input_suspend 0
+on property:sys.axion_boot_completed=1 && property:persist.sys.smart_charge_enabled=false
+  setprop persist.sys.smart_charge_level 100
+
+on property:persist.sys.smart_charge_level=*
+    write /sys/devices/platform/google,charger/charge_start_level 0
+    write /sys/devices/platform/google,charger/charge_stop_level ${persist.sys.smart_charge_level:-100}
