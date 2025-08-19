@@ -1437,7 +1437,7 @@ on property:sys.snapshotctl.unmap=requested
     exec - root root system -- /system/bin/snapshotctl unmap
     setprop sys.snapshotctl.unmap "finished"
     
-on property:sys.boot_completed=1
+on property:persist.sys.axion_boot_completed=*
     # write initial cpuset
     write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
     write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
@@ -1446,6 +1446,8 @@ on property:sys.boot_completed=1
     write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_fg:-0-7}
     write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /sys/kernel/mm/lru_gen/enabled 3
+    setprop persist.sys.power_mode_perf ${persist.sys.power_mode_perf}
 
 on property:persist.sys.power_mode_perf=1
     write /proc/sys/kernel/sched_pelt_multiplier 4
@@ -1460,10 +1462,6 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/dirty_background_ratio 3
     write /proc/sys/vm/dirty_ratio 10
     write /proc/sys/kernel/sched_rr_timeslice_ms 100
-
-# use performance mode boot receiver to make sure oem init writes doesnt override
-on property:persist.sys.power_mode_perf=* && property:persist.sys.mglru_enable=true
-  write /sys/kernel/mm/lru_gen/enabled 3
 
 on property:persist.sys.power_mode_perf=1 && property:persist.sys.dev_supports_perf_gov=true
     setprop persist.sys.scaling_governor "performance"
@@ -1483,10 +1481,10 @@ on property:persist.sys.scaling_governor=*
     write /sys/devices/system/cpu/cpu7/cpufreq/scaling_governor ${persist.sys.scaling_governor}
     write /sys/devices/system/cpu/cpu8/cpufreq/scaling_governor ${persist.sys.scaling_governor}
 
-on property:sys.boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.battery_health_bypass_enabled=true
+on property:sys.axion_boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.battery_health_bypass_enabled=true
   write /sys/class/power_supply/battery/input_suspend 1
   write /sys/class/qcom-battery/input_suspend 1
   
-on property:sys.boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.battery_health_bypass_enabled=false
+on property:sys.axion_boot_completed=1 && property:persist.sys.battery_bypass_supported=true && property:persist.sys.battery_health_bypass_enabled=false
   write /sys/class/power_supply/battery/input_suspend 0
   write /sys/class/qcom-battery/input_suspend 0
