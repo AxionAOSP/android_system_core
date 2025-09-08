@@ -1574,3 +1574,7 @@ on property:persist.sys.smart_charge_enabled=false
 on property:persist.sys.smart_charge_level=*
     write /sys/devices/platform/google,charger/charge_start_level 0
     write /sys/devices/platform/google,charger/charge_stop_level ${persist.sys.smart_charge_level:-100}
+    
+on zygote-start && property:persist.sys.hbmservice_support=true && property:persist.sys.hbmservice_file=*
+    chown system system ${persist.sys.hbmservice_file}
+    chmod 0775 ${persist.sys.hbmservice_file}
