@@ -1539,9 +1539,9 @@ on property:persist.sys.power_mode_perf=0
     write /proc/sys/vm/vfs_cache_pressure 200
     write /proc/sys/vm/dirty_background_ratio 3
     write /proc/sys/vm/dirty_ratio 10
-    setprop persist.sys.nmm.low_adj 1001
-    setprop persist.sys.nmm.mid_adj 800
-    setprop persist.sys.nmm.critical_adj 0
+    setprop persist.sys.nmm.low_adj 201
+    setprop persist.sys.nmm.mid_adj 601
+    setprop persist.sys.nmm.critical_adj 801
 
 on property:persist.sys.power_mode_perf=1 && property:persist.sys.dev_supports_perf_gov=true
     setprop persist.sys.scaling_governor "performance"
