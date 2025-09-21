@@ -1497,12 +1497,12 @@ on property:sys.snapshotctl.unmap=requested
     
 on property:persist.sys.axion_boot_completed=*
     # write initial cpuset
-    write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
-    write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
-    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
-    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-5}
-    write /dev/cpuset/nt_foreground/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
-    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_unlimit_ui:-0-7}
+    write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_all:-0-7}
+    write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_all:-0-7}
+    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-7}
+    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-7}
+    write /dev/cpuset/nt_foreground/cpus ${persist.sys.axion_cpu_limit_bg:-0-2}
+    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_all:-0-7}
     write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_sys_bg:-0-3}
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/display/cpus ${persist.sys.axion_cpu_display:-0-5}
@@ -1551,16 +1551,9 @@ on property:persist.sys.power_mode_perf=0 && property:persist.sys.dev_supports_p
     setprop persist.sys.scaling_governor ${persist.sys.default_scaling_gov}
 
 on property:persist.sys.scaling_governor=*
-    # this is ugly and should be applied per cluster but due to cpu architecture variations just do this for now. 
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu5/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu6/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu7/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu8/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_index}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_index}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_index}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
 
 on property:persist.sys.battery_bypass_supported=true && property:persist.sys.gs_charge_bypass_active=*
   write /sys/class/power_supply/battery/input_suspend ${persist.sys.gs_charge_bypass_active}
