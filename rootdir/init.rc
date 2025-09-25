@@ -1508,7 +1508,6 @@ on property:persist.sys.axion_boot_completed=*
     write /dev/cpuset/display/cpus ${persist.sys.axion_cpu_display:-0-5}
 
     write /sys/kernel/mm/lru_gen/enabled 3
-    write /proc/sys/kernel/sched_rr_timeslice_ms 1
     
     write /proc/sys/kernel/sched_migration_cost_ns 200000
     write /proc/sys/kernel/sched_pelt_multiplier 2
