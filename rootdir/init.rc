@@ -1558,6 +1558,8 @@ on property:persist.sys.axion_boot_completed=*
     setprop persist.sys.smart_charge_enabled ${persist.sys.smart_charge_enabled}
     
     stop statsd
+    
+    write /proc/sys/vm/swappiness 30
 
 on property:persist.sys.power_mode_perf=1
     write /proc/sys/vm/vfs_cache_pressure 50
