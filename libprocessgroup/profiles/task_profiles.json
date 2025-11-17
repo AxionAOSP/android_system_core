@@ -435,6 +435,14 @@
             "Controller": "cpu",
             "Path": "background"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": "background"
+          }
         }
       ]
     },
@@ -468,6 +476,14 @@
           {
             "Controller": "cpu",
             "Path": "foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
           }
         }
       ]
@@ -503,6 +519,14 @@
             "Controller": "cpu",
             "Path": "foreground"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
         }
       ]
     },
@@ -523,6 +547,14 @@
           {
             "Controller": "cpu",
             "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
           }
         }
       ]
