@@ -246,30 +246,30 @@ on init
     chmod 0775 /dev/cpuset/dex2oat/cpus
     chmod 0775 /dev/cpuset/dex2oat/tasks
 
-    # Display
-    mkdir /dev/cpuset/display
-    copy /dev/cpuset/cpus /dev/cpuset/display/cpus
-    copy /dev/cpuset/mems /dev/cpuset/display/mems
-    chown system system /dev/cpuset/display
-    chown system system /dev/cpuset/display/tasks
-    chown system system /dev/cpuset/display/cgroup.procs
-    chown system system /dev/cpuset/display/cpus
-    chmod 0775 /dev/cpuset/display
-    chmod 0775 /dev/cpuset/display/cgroup.procs
-    chmod 0775 /dev/cpuset/display/cpus
-    chmod 0775 /dev/cpuset/display/tasks
-    mkdir /dev/cpuctl/display
-    chown system system /dev/cpuctl/display
-    chown system system /dev/cpuctl/display/tasks
-    chown system system /dev/cpuctl/display/cgroup.procs
-    chown system system /dev/cpuctl/display/cpu.uclamp.latency_sensitive
-    chown system system /dev/cpuctl/display/cpu.uclamp.max
-    chown system system /dev/cpuctl/display/cpu.uclamp.min
-    chmod 0664 /dev/cpuctl/display/tasks
-    chmod 0664 /dev/cpuctl/display/cgroup.procs
-    chmod 0664 /dev/cpuctl/display/cpu.uclamp.latency_sensitive
-    chmod 0664 /dev/cpuctl/display/cpu.uclamp.max
-    chmod 0664 /dev/cpuctl/display/cpu.uclamp.min
+    # svp
+    mkdir /dev/cpuset/svp
+    copy /dev/cpuset/cpus /dev/cpuset/svp/cpus
+    copy /dev/cpuset/mems /dev/cpuset/svp/mems
+    chown system system /dev/cpuset/svp
+    chown system system /dev/cpuset/svp/tasks
+    chown system system /dev/cpuset/svp/cgroup.procs
+    chown system system /dev/cpuset/svp/cpus
+    chmod 0775 /dev/cpuset/svp
+    chmod 0775 /dev/cpuset/svp/cgroup.procs
+    chmod 0775 /dev/cpuset/svp/cpus
+    chmod 0775 /dev/cpuset/svp/tasks
+    mkdir /dev/cpuctl/svp
+    chown system system /dev/cpuctl/svp
+    chown system system /dev/cpuctl/svp/tasks
+    chown system system /dev/cpuctl/svp/cgroup.procs
+    chown system system /dev/cpuctl/svp/cpu.uclamp.latency_sensitive
+    chown system system /dev/cpuctl/svp/cpu.uclamp.max
+    chown system system /dev/cpuctl/svp/cpu.uclamp.min
+    chmod 0664 /dev/cpuctl/svp/tasks
+    chmod 0664 /dev/cpuctl/svp/cgroup.procs
+    chmod 0664 /dev/cpuctl/svp/cpu.uclamp.latency_sensitive
+    chmod 0664 /dev/cpuctl/svp/cpu.uclamp.max
+    chmod 0664 /dev/cpuctl/svp/cpu.uclamp.min
     
     # audio-app
     mkdir /dev/cpuset/audio-app
@@ -554,6 +554,10 @@ on init
     # make the PSI monitor accessible to others
     chown system system /proc/pressure/memory
     chmod 0664 /proc/pressure/memory
+    chown system system /proc/pressure/io
+    chmod 0664 /proc/pressure/io
+    chown system system /proc/pressure/cpu
+    chmod 0664 /proc/pressure/cpu
     
     # smart charge
     chmod 0775 /sys/devices/platform/google,charger/charge_start_level
@@ -1530,7 +1534,7 @@ on property:persist.sys.axion_boot_completed=*
     write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_all:-0-7}
     write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_sys_bg:-0-3}
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
-    write /dev/cpuset/display/cpus ${persist.sys.axion_cpu_display:-0-5}
+    write /dev/cpuset/svp/cpus ${persist.sys.axion_cpu_svp:-4-7}
     write /dev/cpuset/audio-app/cpus ${persist.sys.axion_cpu_audio:-0-5}
 
     write /sys/kernel/mm/lru_gen/enabled 3
