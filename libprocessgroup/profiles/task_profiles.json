@@ -840,14 +840,6 @@
             "Controller": "blkio",
             "Path": ""
           }
-        },
-        {
-          "Name": "SetSchedulerPolicy",
-          "Params":
-          {
-            "Policy": "SCHED_OTHER",
-            "Priority": "-16"
-          }
         }
       ]
     },
