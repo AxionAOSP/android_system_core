@@ -407,7 +407,8 @@ static std::optional<uint32_t> PropertySet(const std::string& name, const std::s
         prop_info* pi = (prop_info*)__system_property_find(name.c_str());
         if (pi != nullptr) {
             // ro.* properties are actually "write-once", unless the system decides to
-            if (StartsWith(name, "ro.") && !weaken_prop_override_security) {
+            if (StartsWith(name, "ro.") && !weaken_prop_override_security &&
+                name != VBMETA_DIGEST_PROP) {
                 *error = "Read-only property was already set";
                 return {PROP_ERROR_READ_ONLY_PROPERTY};
             }
@@ -508,6 +509,7 @@ static bool is_exempt(const std::string& name, const std::string& source_context
     static const std::vector<std::string> exemption_list = {
         "persist.sys.ax_debug_enabled",
         "logpersistd",
+        VBMETA_DIGEST_PROP,
     };
 
     return std::any_of(exemption_list.begin(), exemption_list.end(),
