@@ -1568,6 +1568,9 @@ on property:persist.sys.axion_boot_completed=*
     write /sys/block/sda/queue/scheduler kyber
     write /sys/kernel/mm/lru_gen/enabled 3
     
+    # reset bypass
+    setprop persist.sys.gs_charge_bypass_active 0
+    
 on property:persist.sys.axion_boot_completed=* && property:persist.sys.target_disables_libperf=true
     setprop vendor.powerhal.init 0
     restart vendor.power-hal-aidl
@@ -1599,3 +1602,9 @@ on property:persist.sys.axion_boot_completed=* && property:persist.sys.axion_gpu
 # make sure to add SystemProperties.set property call on oem parts to sync tile state with oem switch state
 on property:persist.sys.axion_boot_completed=* && property:persist.sys.target_supports_touch_boost=true && property:persist.sys.touchboost_enable=*
     setprop persist.vendor.touch_sensitivity_mode ${persist.sys.touchboost_enable}
+    
+on property:persist.sys.battery_bypass_supported=true && property:persist.sys.gs_charge_bypass_active=*
+  write ${persist.sys.gs_charge_bypass_toggle_path} ${persist.sys.gs_charge_bypass_active}
+
+on property:persist.sys.smart_charge_level=*
+    write ${persist.sys.gs_charge_bypass_lvl_path} ${persist.sys.smart_charge_level:-100}
