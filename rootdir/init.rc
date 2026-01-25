@@ -1567,6 +1567,7 @@ on property:persist.sys.axion_boot_completed=*
     write /proc/sys/kernel/sched_util_clamp_min 0
     write /sys/block/sda/queue/scheduler kyber
     write /sys/kernel/mm/lru_gen/enabled 3
+    write /proc/sys/kernel/sched_rr_timeslice_ms 1
     
     # reset bypass
     setprop persist.sys.gs_charge_bypass_active 0
