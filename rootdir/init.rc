@@ -148,6 +148,33 @@ on init
     chmod 0664 /dev/stune/top-app/cgroup.procs
     chmod 0664 /dev/stune/rt/cgroup.procs
 
+
+    # Custom stune groups
+    mkdir /dev/stune/svp
+    mkdir /dev/stune/ax_foreground
+    mkdir /dev/stune/audio-app
+    mkdir /dev/stune/restricted
+    chown system system /dev/stune/svp
+    chown system system /dev/stune/ax_foreground
+    chown system system /dev/stune/audio-app
+    chown system system /dev/stune/restricted
+    chown system system /dev/stune/svp/tasks
+    chown system system /dev/stune/ax_foreground/tasks
+    chown system system /dev/stune/audio-app/tasks
+    chown system system /dev/stune/restricted/tasks
+    chown system system /dev/stune/svp/cgroup.procs
+    chown system system /dev/stune/ax_foreground/cgroup.procs
+    chown system system /dev/stune/audio-app/cgroup.procs
+    chown system system /dev/stune/restricted/cgroup.procs
+    chmod 0664 /dev/stune/svp/tasks
+    chmod 0664 /dev/stune/ax_foreground/tasks
+    chmod 0664 /dev/stune/audio-app/tasks
+    chmod 0664 /dev/stune/restricted/tasks
+    chmod 0664 /dev/stune/svp/cgroup.procs
+    chmod 0664 /dev/stune/ax_foreground/cgroup.procs
+    chmod 0664 /dev/stune/audio-app/cgroup.procs
+    chmod 0664 /dev/stune/restricted/cgroup.procs
+
     # cpuctl hierarchy for devices using utilclamp
     mkdir /dev/cpuctl/foreground
     mkdir /dev/cpuctl/background
