@@ -499,7 +499,7 @@ bool CheckControlPropertyPerms(const std::string& name, const std::string& value
 
 static bool is_exempt(const std::string& name, const std::string& source_context) {
     static const std::vector<std::string> exemption_list = {
-        "persist.sys.ax_debug_enabled",
+        "persist.sys.",
         "logpersistd",
     };
 
