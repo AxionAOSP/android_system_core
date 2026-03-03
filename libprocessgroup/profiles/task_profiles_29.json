@@ -279,6 +279,45 @@
           }
         }
       ]
+    },
+    {
+      "Name": "CpuctlLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "systemui"
+          }
+        }
+      ]
     }
   ]
 }

@@ -93,6 +93,11 @@
       "File": "cpu.uclamp.latency_sensitive"
     },
     {
+      "Name": "Shares",
+      "Controller": "cpu",
+      "File": "cpu.shares"
+    },
+    {
       "Name": "FreezerState",
       "Controller": "freezer",
       "File": "cgroup.freeze"
@@ -962,6 +967,97 @@
           }
         }
       ]
+    },
+    {
+      "Name": "CpuSetLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuSetHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "BlkIoLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "BlkIoHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "systemui"
+          }
+        }
+      ]
     }
   ],
 
@@ -1061,6 +1157,26 @@
     {
       "Name": "CPUSET_SP_AUDIO",
       "Profiles": [ "HighPerformance", "AudioPolicy", "HighIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "CPUSET_SP_LBACKGROUND",
+      "Profiles": [ "CpuSetLBackground", "BlkIoLBackground", "CpuctlLBackground", "TimerSlackHigh" ]
+    },
+    {
+      "Name": "CPUSET_SP_HBACKGROUND",
+      "Profiles": [ "CpuSetHBackground", "BlkIoHBackground", "CpuctlHBackground", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "SCHED_SP_SYSTEMUI",
+      "Profiles": [ "CpuctlSystemUI", "HighIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "SCHED_SP_LBACKGROUND",
+      "Profiles": [ "CpuctlLBackground", "BlkIoLBackground" ]
+    },
+    {
+      "Name": "SCHED_SP_HBACKGROUND",
+      "Profiles": [ "CpuctlHBackground", "BlkIoHBackground" ]
     }
   ]
 }

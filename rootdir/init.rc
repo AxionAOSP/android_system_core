@@ -175,6 +175,30 @@ on init
     chmod 0664 /dev/stune/audio-app/cgroup.procs
     chmod 0664 /dev/stune/restricted/cgroup.procs
 
+    # l-background: lowest priority cached/idle processes
+    mkdir /dev/stune/l-background
+    chown system system /dev/stune/l-background
+    chown system system /dev/stune/l-background/tasks
+    chown system system /dev/stune/l-background/cgroup.procs
+    chmod 0664 /dev/stune/l-background/tasks
+    chmod 0664 /dev/stune/l-background/cgroup.procs
+
+    # h-background: higher priority background (recent apps, important bg services)
+    mkdir /dev/stune/h-background
+    chown system system /dev/stune/h-background
+    chown system system /dev/stune/h-background/tasks
+    chown system system /dev/stune/h-background/cgroup.procs
+    chmod 0664 /dev/stune/h-background/tasks
+    chmod 0664 /dev/stune/h-background/cgroup.procs
+
+    # systemui: dedicated scheduling for SystemUI
+    mkdir /dev/stune/systemui
+    chown system system /dev/stune/systemui
+    chown system system /dev/stune/systemui/tasks
+    chown system system /dev/stune/systemui/cgroup.procs
+    chmod 0664 /dev/stune/systemui/tasks
+    chmod 0664 /dev/stune/systemui/cgroup.procs
+
     # cpuctl hierarchy for devices using utilclamp
     mkdir /dev/cpuctl/foreground
     mkdir /dev/cpuctl/background
@@ -340,6 +364,61 @@ on init
     chmod 0664 /dev/cpuctl/restricted/cpu.uclamp.max
     chmod 0664 /dev/cpuctl/restricted/cpu.uclamp.min
 
+    # Extended cpuctl groups for fine-grained CPU scheduling
+    # cpu.shares: relative weight vs other groups (default 1024)
+    # cpu.uclamp.max: cap CPU frequency utilization (0-1024)
+
+    # l-background: lowest priority cached/idle processes
+    mkdir /dev/cpuctl/l-background
+    chown system system /dev/cpuctl/l-background
+    chown system system /dev/cpuctl/l-background/tasks
+    chown system system /dev/cpuctl/l-background/cgroup.procs
+    chown system system /dev/cpuctl/l-background/cpu.shares
+    chown system system /dev/cpuctl/l-background/cpu.uclamp.min
+    chown system system /dev/cpuctl/l-background/cpu.uclamp.max
+    chmod 0664 /dev/cpuctl/l-background/tasks
+    chmod 0664 /dev/cpuctl/l-background/cgroup.procs
+    chmod 0664 /dev/cpuctl/l-background/cpu.shares
+    chmod 0664 /dev/cpuctl/l-background/cpu.uclamp.min
+    chmod 0664 /dev/cpuctl/l-background/cpu.uclamp.max
+    write /dev/cpuctl/l-background/cpu.shares 64
+    write /dev/cpuctl/l-background/cpu.uclamp.max 256
+    write /dev/cpuctl/l-background/cpu.uclamp.min 0
+
+    # h-background: higher priority background (recent apps, important bg)
+    mkdir /dev/cpuctl/h-background
+    chown system system /dev/cpuctl/h-background
+    chown system system /dev/cpuctl/h-background/tasks
+    chown system system /dev/cpuctl/h-background/cgroup.procs
+    chown system system /dev/cpuctl/h-background/cpu.shares
+    chown system system /dev/cpuctl/h-background/cpu.uclamp.min
+    chown system system /dev/cpuctl/h-background/cpu.uclamp.max
+    chmod 0664 /dev/cpuctl/h-background/tasks
+    chmod 0664 /dev/cpuctl/h-background/cgroup.procs
+    chmod 0664 /dev/cpuctl/h-background/cpu.shares
+    chmod 0664 /dev/cpuctl/h-background/cpu.uclamp.min
+    chmod 0664 /dev/cpuctl/h-background/cpu.uclamp.max
+    write /dev/cpuctl/h-background/cpu.shares 256
+    write /dev/cpuctl/h-background/cpu.uclamp.max 512
+    write /dev/cpuctl/h-background/cpu.uclamp.min 0
+
+    # systemui: dedicated scheduling for SystemUI
+    mkdir /dev/cpuctl/systemui
+    chown system system /dev/cpuctl/systemui
+    chown system system /dev/cpuctl/systemui/tasks
+    chown system system /dev/cpuctl/systemui/cgroup.procs
+    chown system system /dev/cpuctl/systemui/cpu.shares
+    chown system system /dev/cpuctl/systemui/cpu.uclamp.min
+    chown system system /dev/cpuctl/systemui/cpu.uclamp.max
+    chmod 0664 /dev/cpuctl/systemui/tasks
+    chmod 0664 /dev/cpuctl/systemui/cgroup.procs
+    chmod 0664 /dev/cpuctl/systemui/cpu.shares
+    chmod 0664 /dev/cpuctl/systemui/cpu.uclamp.min
+    chmod 0664 /dev/cpuctl/systemui/cpu.uclamp.max
+    write /dev/cpuctl/systemui/cpu.shares 1024
+    write /dev/cpuctl/systemui/cpu.uclamp.max 1024
+    write /dev/cpuctl/systemui/cpu.uclamp.min 100
+
     # Create an stune group for NNAPI HAL processes
     mkdir /dev/stune/nnapi-hal
     chown system system /dev/stune/nnapi-hal
@@ -383,6 +462,24 @@ on init
     write /dev/blkio/blkio.group_idle 0
     write /dev/blkio/background/blkio.group_idle 0
     write /dev/blkio/background/blkio.prio.class restrict-to-be
+
+    # blkio groups for background tiers
+    mkdir /dev/blkio/l-background
+    mkdir /dev/blkio/h-background
+    chown system system /dev/blkio/l-background
+    chown system system /dev/blkio/h-background
+    chown system system /dev/blkio/l-background/tasks
+    chown system system /dev/blkio/h-background/tasks
+    chown system system /dev/blkio/l-background/cgroup.procs
+    chown system system /dev/blkio/h-background/cgroup.procs
+    chmod 0664 /dev/blkio/l-background/tasks
+    chmod 0664 /dev/blkio/h-background/tasks
+    chmod 0664 /dev/blkio/l-background/cgroup.procs
+    chmod 0664 /dev/blkio/h-background/cgroup.procs
+    write /dev/blkio/l-background/blkio.weight 800
+    write /dev/blkio/h-background/blkio.weight 1000
+    write /dev/blkio/l-background/blkio.group_idle 0
+    write /dev/blkio/h-background/blkio.group_idle 0
 
     restorecon_recursive /mnt
 
@@ -553,6 +650,32 @@ on init
     chown system system /dev/cpuset/ax_foreground/tasks
     chown system system /dev/cpuset/ax_foreground/cgroup.procs
     chown system system /dev/cpuset/ax_foreground/cpus
+
+    # l-background: lowest priority background (cached/idle processes)
+    mkdir /dev/cpuset/l-background
+    copy /dev/cpuset/cpus /dev/cpuset/l-background/cpus
+    copy /dev/cpuset/mems /dev/cpuset/l-background/mems
+    chown system system /dev/cpuset/l-background
+    chown system system /dev/cpuset/l-background/tasks
+    chown system system /dev/cpuset/l-background/cgroup.procs
+    chown system system /dev/cpuset/l-background/cpus
+    chmod 0775 /dev/cpuset/l-background
+    chmod 0775 /dev/cpuset/l-background/cpus
+    chmod 0664 /dev/cpuset/l-background/tasks
+    chmod 0664 /dev/cpuset/l-background/cgroup.procs
+
+    # h-background: higher priority background (recent apps, important bg services)
+    mkdir /dev/cpuset/h-background
+    copy /dev/cpuset/cpus /dev/cpuset/h-background/cpus
+    copy /dev/cpuset/mems /dev/cpuset/h-background/mems
+    chown system system /dev/cpuset/h-background
+    chown system system /dev/cpuset/h-background/tasks
+    chown system system /dev/cpuset/h-background/cgroup.procs
+    chown system system /dev/cpuset/h-background/cpus
+    chmod 0775 /dev/cpuset/h-background
+    chmod 0775 /dev/cpuset/h-background/cpus
+    chmod 0664 /dev/cpuset/h-background/tasks
+    chmod 0664 /dev/cpuset/h-background/cgroup.procs
 
     # set system-background to 0775 so SurfaceFlinger can touch it
     chmod 0775 /dev/cpuset/system-background
@@ -1549,12 +1672,14 @@ on property:persist.sys.axion_boot_completed=*
     # write initial cpuset
     write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_all:-0-7}
     write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_all:-0-7}
-    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-7}
-    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-7}
-    write /dev/cpuset/ax_foreground/cpus ${persist.sys.axion_cpu_limit_bg:-0-2}
-    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_all:-0-7}
+    write /dev/cpuset/foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
+    write /dev/cpuset/foreground_window/cpus ${persist.sys.axion_cpu_fg:-0-5}
+    write /dev/cpuset/ax_foreground/cpus ${persist.sys.axion_cpu_fg:-0-5}
+    write /dev/cpuset/restricted/cpus ${persist.sys.axion_cpu_small:-0-3}
     write /dev/cpuset/system-background/cpus ${persist.sys.axion_cpu_sys_bg:-0-3}
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/l-background/cpus ${persist.sys.axion_cpu_small:-0-3}
+    write /dev/cpuset/h-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/svp/cpus ${persist.sys.axion_cpu_svp:-4-7}
     write /dev/cpuset/audio-app/cpus ${persist.sys.axion_cpu_audio:-0-5}
     
