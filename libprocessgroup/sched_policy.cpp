@@ -70,7 +70,7 @@ int set_cpuset_policy(pid_t tid, SchedPolicy policy) {
         case SP_H_BACKGROUND:
             return SetTaskProfiles(tid, {"CPUSET_SP_HBACKGROUND"}, true) ? 0 : -1;
         case SP_SYSTEMUI:
-            return SetTaskProfiles(tid, {"CPUSET_SP_FOREGROUND"}, true) ? 0 : -1;
+            return SetTaskProfiles(tid, {"CPUSET_SP_SYSTEMUI"}, true) ? 0 : -1;
         default:
             break;
     }
@@ -320,7 +320,7 @@ const char* get_cpuset_policy_profile_name(SchedPolicy policy) {
             "CPUSET_SP_TOP_APP",      "CPUSET_SP_DEFAULT",    "CPUSET_SP_RESTRICTED",
             "CPUSET_SP_FOREGROUND_WINDOW", "CPUSET_SP_SVP", "CPUSET_SP_AX_FOREGROUND",
             "CPUSET_SP_LBACKGROUND", "CPUSET_SP_HBACKGROUND",
-            "CPUSET_SP_FOREGROUND"};
+            "CPUSET_SP_SYSTEMUI"};
     if (policy < SP_DEFAULT || policy >= SP_CNT) {
         return nullptr;
     }

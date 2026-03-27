@@ -326,6 +326,19 @@ on init
     chmod 0664 /dev/cpuctl/svp/cpu.uclamp.max
     chmod 0664 /dev/cpuctl/svp/cpu.uclamp.min
     
+    # systemui: dedicated cpuset with all cores for SystemUI
+    mkdir /dev/cpuset/systemui
+    copy /dev/cpuset/cpus /dev/cpuset/systemui/cpus
+    copy /dev/cpuset/mems /dev/cpuset/systemui/mems
+    chown system system /dev/cpuset/systemui
+    chown system system /dev/cpuset/systemui/tasks
+    chown system system /dev/cpuset/systemui/cgroup.procs
+    chown system system /dev/cpuset/systemui/cpus
+    chmod 0775 /dev/cpuset/systemui
+    chmod 0775 /dev/cpuset/systemui/cgroup.procs
+    chmod 0775 /dev/cpuset/systemui/cpus
+    chmod 0775 /dev/cpuset/systemui/tasks
+
     # audio-app
     mkdir /dev/cpuset/audio-app
     copy /dev/cpuset/cpus /dev/cpuset/audio-app/cpus

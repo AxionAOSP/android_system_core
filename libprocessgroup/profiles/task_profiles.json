@@ -1058,6 +1058,32 @@
           }
         }
       ]
+    },
+    {
+      "Name": "CpuSetSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "systemui"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "SchedtuneSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "systemui"
+          }
+        }
+      ]
     }
   ],
 
@@ -1168,7 +1194,11 @@
     },
     {
       "Name": "SCHED_SP_SYSTEMUI",
-      "Profiles": [ "CpuctlSystemUI", "HighIoPriority", "TimerSlackNormal" ]
+      "Profiles": [ "CpuctlSystemUI", "SchedtuneSystemUI", "HighIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "CPUSET_SP_SYSTEMUI",
+      "Profiles": [ "CpuSetSystemUI", "MaxIoPriority", "TimerSlackNormal" ]
     },
     {
       "Name": "SCHED_SP_LBACKGROUND",
