@@ -1761,6 +1761,20 @@ on property:persist.sys.axion_boot_completed=*
     #pixel bore
     write /proc/vendor_sched/latency_ns 10000000
     write /proc/vendor_sched/min_granularity_ns 1000000
+
+    # tensor heat reduction
+    write /proc/vendor_sched/groups/nnapi/uclamp_min 128
+    write /sys/class/net/rmnet0/queues/rx-0/rps_cpus 0f
+    write /sys/class/net/rmnet1/queues/rx-0/rps_cpus 0f
+    write /sys/class/net/rmnet2/queues/rx-0/rps_cpus 0f
+    write /sys/class/net/rmnet3/queues/rx-0/rps_cpus 0f
+    write /sys/class/net/rmnet4/queues/rx-0/rps_cpus 0f
+    write /sys/class/net/rmnet5/queues/rx-0/rps_cpus 0f
+    write /sys/class/net/rmnet6/queues/rx-0/rps_cpus 0f
+    write /sys/class/net/rmnet7/queues/rx-0/rps_cpus 0f
+    write /sys/devices/platform/exynos-drm/primary-panel/panel_idle 1
+    write /sys/devices/platform/exynos-drm/primary-panel/idle_delay_ms 80
+    write /sys/devices/platform/28000000.mali/idle_hysteresis_time 10000
     
 on property:persist.sys.axion_boot_completed=* && property:persist.sys.target_disables_libperf=true
     setprop vendor.powerhal.init 0
