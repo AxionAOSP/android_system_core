@@ -1758,9 +1758,6 @@ on property:persist.sys.axion_boot_completed=*
     write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
-    #pixel bore
-    write /proc/vendor_sched/latency_ns 10000000
-    write /proc/vendor_sched/min_granularity_ns 1000000
 
     # tensor heat reduction
     write /proc/vendor_sched/groups/nnapi/uclamp_min 128
