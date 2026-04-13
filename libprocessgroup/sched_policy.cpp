@@ -316,7 +316,7 @@ const char* get_cpuset_policy_profile_name(SchedPolicy policy) {
      */
     static constexpr const char* kCpusetProfiles[SP_CNT + 1] = {
             "CPUSET_SP_DEFAULT",      "CPUSET_SP_BACKGROUND", "CPUSET_SP_FOREGROUND",
-            "CPUSET_SP_SYSTEM",       "CPUSET_SP_FOREGROUND", "CPUSET_SP_FOREGROUND",
+            "CPUSET_SP_SYSTEM",       "AudioPolicy",          "CPUSET_SP_FOREGROUND",
             "CPUSET_SP_TOP_APP",      "CPUSET_SP_DEFAULT",    "CPUSET_SP_RESTRICTED",
             "CPUSET_SP_FOREGROUND_WINDOW", "CPUSET_SP_SVP", "CPUSET_SP_AX_FOREGROUND",
             "CPUSET_SP_LBACKGROUND", "CPUSET_SP_HBACKGROUND",
