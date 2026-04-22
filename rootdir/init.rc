@@ -255,6 +255,12 @@ on init
     chmod 0664 /dev/cpuctl/system-background/cgroup.procs
     chmod 0664 /dev/cpuctl/dex2oat/cgroup.procs
 
+    # uclamp tuning
+    chown system system /dev/cpuctl/foreground/cpu.uclamp.min
+    chown system system /dev/cpuctl/top-app/cpu.uclamp.min
+    chmod 0664 /dev/cpuctl/foreground/cpu.uclamp.min
+    chmod 0664 /dev/cpuctl/top-app/cpu.uclamp.min
+
     # Create a cpu group for NNAPI HAL processes
     mkdir /dev/cpuctl/nnapi-hal
     chown system system /dev/cpuctl/nnapi-hal
@@ -1479,13 +1485,6 @@ on boot && property:suspend.disable_sync_on_suspend=true
     write /sys/power/sync_on_suspend 0
 
 on boot
-    chown system system /proc/gpufreqv2/fix_target_opp_index
-    chmod 0664 /proc/gpufreqv2/fix_target_opp_index
-    chown system system /proc/gpufreqv2/gpu_working_opp_table
-    chmod 0664 /proc/gpufreqv2/gpu_working_opp_table
-    chown system system /proc/gpufreqv2/gpufreq_status
-    chmod 0664 /proc/gpufreqv2/gpufreq_status
-
     # Custom ROM Hide allowlist permissions
     chmod 0711 /data/adb
     chmod 0644 /data/adb/.custom_rom_hide_allowlist
@@ -1801,9 +1800,3 @@ on zygote-start && property:persist.sys.hbmservice_support=true && property:pers
     
 on property:persist.sys.axion_boot_completed=* && property:persist.sys.target_supports_touch_boost=true && property:persist.sys.touchboost_enable=*
     setprop persist.vendor.touch_sensitivity_mode ${persist.sys.touchboost_enable}
-    
-on property:persist.sys.axion_boot_completed=* && property:persist.sys.axion_gpu_freqs_path=* && property:persist.sys.axion_gpu_minfreq_file=*
-    chown system system ${persist.sys.axion_gpu_freqs_path}
-    chmod 0775 ${persist.sys.axion_gpu_freqs_path}
-    chown system system ${persist.sys.axion_gpu_minfreq_file}
-    chmod 0775 ${persist.sys.axion_gpu_minfreq_file}
