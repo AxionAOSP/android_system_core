@@ -1732,7 +1732,7 @@ on property:persist.sys.axion_boot_completed=*
     write /dev/cpuset/audio-app/cpus ${persist.sys.axion_cpu_audio:-0-5}
     
     write /proc/sys/kernel/sched_migration_cost_ns 200000
-    write /proc/sys/kernel/sched_pelt_multiplier 4
+    write /proc/sys/kernel/sched_pelt_multiplier 2
     write /proc/sys/kernel/sched_util_clamp_min 0
     write /sys/block/sda/queue/scheduler kyber
     write /sys/kernel/mm/lru_gen/enabled 3
@@ -1765,12 +1765,12 @@ on property:persist.sys.axion_boot_completed=*
     write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
-
-    # tensor heat reduction
     write /proc/vendor_sched/groups/nnapi/uclamp_min 128
     write /sys/devices/platform/exynos-drm/primary-panel/panel_idle 1
     write /sys/devices/platform/exynos-drm/primary-panel/idle_delay_ms 80
     write /sys/devices/platform/28000000.mali/idle_hysteresis_time 10000
+    write /proc/vendor_sched/enable_hrtick 0
+    write /proc/vendor_sched/max_load_balance_interval 100
     
 on property:persist.sys.axion_boot_completed=* && property:persist.sys.target_disables_libperf=true
     setprop vendor.powerhal.init 0
