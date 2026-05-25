@@ -34,7 +34,7 @@
           "Params":
           {
             "Controller": "schedtune",
-            "Path": ""
+            "Path": "system"
           }
         }
       ]
@@ -47,7 +47,7 @@
           "Params":
           {
             "Controller": "schedtune",
-            "Path": "background"
+            "Path": "system-background"
           }
         }
       ]
@@ -125,7 +125,7 @@
           "Params":
           {
             "Controller": "schedtune",
-            "Path": "background"
+            "Path": "dex2oat"
           }
         }
       ]

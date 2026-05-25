@@ -120,6 +120,14 @@
             "Controller": "cpu",
             "Path": "background"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "background"
+          }
         }
       ]
     },
@@ -159,6 +167,14 @@
             "Controller": "cpu",
             "Path": "system"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "system"
+          }
         }
       ]
     },
@@ -170,6 +186,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "system-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "system-background"
           }
         }
@@ -185,6 +209,14 @@
             "Controller": "cpu",
             "Path": "foreground"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "foreground"
+          }
         }
       ]
     },
@@ -196,6 +228,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "ax_foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "ax_foreground"
           }
         }
@@ -211,6 +251,14 @@
             "Controller": "cpu",
             "Path": "foreground_window"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "foreground_window"
+          }
         }
       ]
     },
@@ -222,6 +270,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "top-app"
           }
         },
@@ -244,6 +300,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "rt"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "rt"
           }
         }
@@ -272,6 +336,14 @@
             "Controller": "cpu",
             "Path": "camera-daemon"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "camera-daemon"
+          }
         }
       ]
     },
@@ -285,6 +357,14 @@
             "Controller": "cpu",
             "Path": "nnapi-hal"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "nnapi-hal"
+          }
         }
       ]
     },
@@ -296,6 +376,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "dex2oat"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "dex2oat"
           }
         },
@@ -451,6 +539,14 @@
           "Name": "JoinCgroup",
           "Params":
           {
+            "Controller": "schedtune",
+            "Path": "background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
             "Controller": "blkio",
             "Path": "background"
           }
@@ -493,6 +589,14 @@
           "Name": "JoinCgroup",
           "Params":
           {
+            "Controller": "schedtune",
+            "Path": "foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
             "Controller": "blkio",
             "Path": ""
           }
@@ -507,6 +611,14 @@
           "Params":
           {
             "Controller": "cpuset",
+            "Path": "foreground_window"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "foreground_window"
           }
         }
@@ -528,6 +640,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "ax_foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "ax_foreground"
           }
         },
@@ -571,6 +691,14 @@
           "Name": "JoinCgroup",
           "Params":
           {
+            "Controller": "schedtune",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
             "Controller": "blkio",
             "Path": ""
           }
@@ -594,6 +722,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "svp"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "svp"
           }
         },
@@ -659,6 +795,14 @@
             "Controller": "cpu",
             "Path": "svp"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "svp"
+          }
         }
       ]
     },
@@ -678,6 +822,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "system-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "system-background"
           }
         }
@@ -701,6 +853,14 @@
             "Controller": "cpu",
             "Path": "restricted"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "restricted"
+          }
         }
       ]
     },
@@ -721,6 +881,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "camera-daemon"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "camera-daemon"
           }
         }
@@ -814,6 +982,14 @@
             "Controller": "cpuset",
             "Path": "top-app"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "top-app"
+          }
         }
       ]
     },
@@ -825,6 +1001,14 @@
           "Params":
           {
             "Controller": "cpuset",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "top-app"
           }
         }
@@ -848,6 +1032,14 @@
           {
             "Controller": "cpu",
             "Path": "foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "audio-app"
           }
         },
         {
@@ -978,6 +1170,14 @@
             "Controller": "cpuset",
             "Path": "l-background"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "l-background"
+          }
         }
       ]
     },
@@ -989,6 +1189,14 @@
           "Params":
           {
             "Controller": "cpuset",
+            "Path": "h-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "h-background"
           }
         }
@@ -1030,6 +1238,14 @@
             "Controller": "cpu",
             "Path": "l-background"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "l-background"
+          }
         }
       ]
     },
@@ -1041,6 +1257,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "h-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "h-background"
           }
         }
@@ -1056,6 +1280,14 @@
             "Controller": "cpu",
             "Path": "systemui"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "systemui"
+          }
         }
       ]
     },
@@ -1067,6 +1299,14 @@
           "Params":
           {
             "Controller": "cpuset",
+            "Path": "systemui"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "systemui"
           }
         }
