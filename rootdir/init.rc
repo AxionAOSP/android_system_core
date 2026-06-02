@@ -433,7 +433,7 @@ on init
     chmod 0664 /dev/cpuctl/l-background/cpu.uclamp.min
     chmod 0664 /dev/cpuctl/l-background/cpu.uclamp.max
     write /dev/cpuctl/l-background/cpu.shares 64
-    write /dev/cpuctl/l-background/cpu.uclamp.max 256
+    write /dev/cpuctl/l-background/cpu.uclamp.max 25
     write /dev/cpuctl/l-background/cpu.uclamp.min 0
 
     # h-background: higher priority background (recent apps, important bg)
@@ -450,7 +450,7 @@ on init
     chmod 0664 /dev/cpuctl/h-background/cpu.uclamp.min
     chmod 0664 /dev/cpuctl/h-background/cpu.uclamp.max
     write /dev/cpuctl/h-background/cpu.shares 256
-    write /dev/cpuctl/h-background/cpu.uclamp.max 512
+    write /dev/cpuctl/h-background/cpu.uclamp.max 50
     write /dev/cpuctl/h-background/cpu.uclamp.min 0
 
     # systemui: dedicated scheduling for SystemUI
@@ -467,7 +467,7 @@ on init
     chmod 0664 /dev/cpuctl/systemui/cpu.uclamp.min
     chmod 0664 /dev/cpuctl/systemui/cpu.uclamp.max
     write /dev/cpuctl/systemui/cpu.shares 1024
-    write /dev/cpuctl/systemui/cpu.uclamp.max 1024
+    write /dev/cpuctl/systemui/cpu.uclamp.max 100
     write /dev/cpuctl/systemui/cpu.uclamp.min 100
 
     # Create an stune group for NNAPI HAL processes
