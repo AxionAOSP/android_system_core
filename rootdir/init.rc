@@ -1501,7 +1501,9 @@ on zygote-start
 on property:persist.sys.axion_boot_completed=*
     # Tweak background writeout
     write /proc/sys/vm/dirty_expire_centisecs 3000
-    write /proc/sys/vm/dirty_background_ratio  10
+    write /proc/sys/vm/dirty_background_ratio  5
+    write /proc/sys/vm/dirty_ratio 15
+    write /proc/sys/vm/vfs_cache_pressure 200
 
 on property:sys.boot_completed=1 && property:ro.config.batteryless=true
     # Flush data and checkpoint more aggressively to prepare sudden power cuts
@@ -1752,6 +1754,7 @@ on property:persist.sys.axion_boot_completed=*
     write /dev/cpuset/background/cpus ${persist.sys.axion_cpu_bg:-0-2}
     write /dev/cpuset/l-background/cpus ${persist.sys.axion_cpu_small:-0-3}
     write /dev/cpuset/h-background/cpus ${persist.sys.axion_cpu_bg:-0-2}
+    write /dev/cpuset/systemui/cpus ${persist.sys.axion_cpu_svp:-4-7}
     write /dev/cpuset/svp/cpus ${persist.sys.axion_cpu_svp:-4-7}
     write /dev/cpuset/audio-app/cpus ${persist.sys.axion_cpu_audio:-0-5}
     
@@ -1762,6 +1765,10 @@ on property:persist.sys.axion_boot_completed=*
     write /sys/kernel/mm/lru_gen/enabled 3
     write /proc/sys/kernel/sched_rr_timeslice_ms 1
     write /sys/kernel/mm/swap/vma_ra_enabled false
+    
+    write /proc/sys/kernel/timer_migration 0
+    write /proc/sys/kernel/printk_ratelimit 5
+    write /proc/sys/kernel/printk_ratelimit_burst 10
     
     chmod 770 /sys/block/sdc/queue/rq_affinity
     write /sys/block/sdc/queue/rq_affinity 2
@@ -1796,7 +1803,7 @@ on property:persist.sys.axion_boot_completed=*
     write /proc/vendor_sched/enable_hrtick 0
     write /proc/vendor_sched/max_load_balance_interval 100
     
-on property:persist.sys.axion_boot_completed=* && property:persist.sys.target_disables_libperf=true
+on property:persist.sys.axion_boot_completed=* && property:persist.sys.ax_burst_engine_status=1
     setprop vendor.powerhal.init 0
     restart vendor.power-hal-aidl
     
