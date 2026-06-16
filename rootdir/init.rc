@@ -1448,19 +1448,19 @@ on post-fs-data
     # Update dm-verity state and set partition.*.verified properties.
     verity_update_state
 
-on early-init && property:persist.sys.axion.spoof.migrated=
-    setprop persist.sys.axion.spoof.migrated 0
+on early-init && property:persist.sys.axion_spf_mig=
+    setprop persist.sys.axion_spf_mig 0
 
-on post-fs-data && property:persist.sys.axion.spoof.migrated=0
+on post-fs-data && property:persist.sys.axion_spf_mig=0
     exec - root root -- /system/bin/rm -rf /data/adb/tricky_store /data/adb/playintegrityfix /data/adb/gameprops
-    setprop persist.sys.axion.spoof.migrated 1
+    setprop persist.sys.axion_spf_mig 1
     
-on early-init && property:persist.sys.axion.cusromhide.migrated=
-    setprop persist.sys.axion.cusromhide.migrated 0
+on early-init && property:persist.sys.axion_crh_mig=
+    setprop persist.sys.axion_crh_mig 0
 
-on post-fs-data && property:persist.sys.axion.cusromhide.migrated=0
+on post-fs-data && property:persist.sys.axion_crh_mig=0
     exec - root root -- /system/bin/rm -rf /data/adb/.custom_rom_hide_allowlist
-    setprop persist.sys.axion.cusromhide.migrated 1
+    setprop persist.sys.axion_crh_mig 1
 
 on property:vold.checkpoint_committed=1
     trigger post-fs-data-checkpointed
@@ -1498,7 +1498,7 @@ on zygote-start
     start zygote
     start zygote_secondary
 
-on property:persist.sys.axion_boot_completed=*
+on property:persist.sys.axion_booted=*
     # Tweak background writeout
     write /proc/sys/vm/dirty_expire_centisecs 3000
     write /proc/sys/vm/dirty_background_ratio  5
@@ -1742,7 +1742,7 @@ on property:sys.snapshotctl.unmap=requested
     exec - root root system -- /system/bin/snapshotctl unmap
     setprop sys.snapshotctl.unmap "finished"
     
-on property:persist.sys.axion_boot_completed=*
+on property:persist.sys.axion_booted=*
     # write initial cpuset
     write /dev/cpuset/top-app/cpus ${persist.sys.axion_cpu_all:-0-7}
     write /dev/cpuset/camera-daemon/cpus ${persist.sys.axion_cpu_all:-0-7}
@@ -1790,12 +1790,12 @@ on property:persist.sys.axion_boot_completed=*
     write /proc/vendor_sched/uclamp_max_filter_divider 4
     write /proc/vendor_sched/uclamp_max_filter_rt 16
     write /proc/vendor_sched/uclamp_max_filter_enable 1
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_index}/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_index}/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_index}/cpufreq/sched_pixel/up_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_index}/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_idx}/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_idx}/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_idx}/cpufreq/sched_pixel/up_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_idx}/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_idx}/cpufreq/sched_pixel/down_rate_limit_us 2000
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_idx}/cpufreq/sched_pixel/down_rate_limit_us 2000
     write /proc/vendor_sched/groups/nnapi/uclamp_min 128
     write /sys/devices/platform/exynos-drm/primary-panel/panel_idle 1
     write /sys/devices/platform/exynos-drm/primary-panel/idle_delay_ms 80
@@ -1803,7 +1803,7 @@ on property:persist.sys.axion_boot_completed=*
     write /proc/vendor_sched/enable_hrtick 0
     write /proc/vendor_sched/max_load_balance_interval 100
     
-on property:persist.sys.axion_boot_completed=* && property:persist.sys.ax_burst_engine_status=1
+on property:persist.sys.axion_booted=* && property:persist.sys.ax_burst_engine_status=1
     setprop vendor.powerhal.init 0
     restart vendor.power-hal-aidl
     
@@ -1814,15 +1814,15 @@ on property:persist.sys.power_mode_perf=0 && property:persist.sys.dev_supports_p
     setprop persist.sys.scaling_governor ${persist.sys.default_scaling_gov}
 
 on property:persist.sys.scaling_governor=*
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_index}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_index}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
-    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_index}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_small_idx}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_big_idx}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
+    write /sys/devices/system/cpu/cpu${persist.sys.axion_cpu_prime_idx}/cpufreq/scaling_governor ${persist.sys.scaling_governor}
     
 on zygote-start && property:persist.sys.hbmservice_support=true && property:persist.sys.hbmservice_file=*
     chown system system ${persist.sys.hbmservice_file}
     chmod 0775 ${persist.sys.hbmservice_file}
     
-on property:persist.sys.axion_boot_completed=* && property:persist.sys.target_supports_touch_boost=true && property:persist.sys.touchboost_enable=*
+on property:persist.sys.axion_booted=* && property:persist.sys.target_supports_touch_boost=true && property:persist.sys.touchboost_enable=*
     setprop persist.vendor.touch_sensitivity_mode ${persist.sys.touchboost_enable}
 
 on property:persist.sys.is_upgrade=1
