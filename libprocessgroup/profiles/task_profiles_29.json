@@ -34,7 +34,7 @@
           "Params":
           {
             "Controller": "schedtune",
-            "Path": ""
+            "Path": "system"
           }
         }
       ]
@@ -60,7 +60,7 @@
           "Params":
           {
             "Controller": "schedtune",
-            "Path": "background"
+            "Path": "system-background"
           }
         }
       ]
@@ -125,7 +125,7 @@
           "Params":
           {
             "Controller": "schedtune",
-            "Path": "background"
+            "Path": "dex2oat"
           }
         }
       ]
@@ -152,6 +152,151 @@
           {
             "Name": "STunePreferIdle",
             "Value": "0"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "HighAxPerformance",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "ax_foreground"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "ProcessAxCapacityHigh",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "ax_foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
+        },
+        {
+          "Name": "SetTimerSlack",
+          "Params":
+          {
+            "Slack": "10000000"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "AudioPolicy",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
+        },
+        {
+          "Name": "SetSchedulerPolicy",
+          "Params":
+          {
+            "Policy": "SCHED_OTHER",
+            "Nice": "-16"
+          }
+        },
+        {
+          "Name": "SetTimerSlack",
+          "Params":
+          {
+            "Slack": "50000"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "ServiceCapacityRestricted",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "restricted"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "systemui"
           }
         }
       ]

@@ -6,9 +6,34 @@
       "File": "background/cpus"
     },
     {
+      "Name": "lLowCapacityCPUs",
+      "Controller": "cpuset",
+      "File": "l-background/cpus"
+    },
+    {
+      "Name": "hLowCapacityCPUs",
+      "Controller": "cpuset",
+      "File": "h-background/cpus"
+    },
+    {
       "Name": "HighCapacityCPUs",
       "Controller": "cpuset",
       "File": "foreground/cpus"
+    },
+    {
+      "Name": "AxFgCPUs",
+      "Controller": "cpuset",
+      "File": "ax_foreground/cpus"
+    },
+    {
+      "Name": "SystemUICPUs",
+      "Controller": "cpuset",
+      "File": "systemui/cpus"
+    },
+    {
+      "Name": "AudioCPUs",
+      "Controller": "cpuset",
+      "File": "audio-app/cpus"
     },
     {
       "Name": "HighCapacityWICPUs",
@@ -78,6 +103,11 @@
       "File": "cpu.uclamp.latency_sensitive"
     },
     {
+      "Name": "Shares",
+      "Controller": "cpu",
+      "File": "cpu.shares"
+    },
+    {
       "Name": "FreezerState",
       "Controller": "freezer",
       "File": "cgroup.freeze"
@@ -98,6 +128,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "background"
           }
         }
@@ -139,6 +177,14 @@
             "Controller": "cpu",
             "Path": "system"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "system"
+          }
         }
       ]
     },
@@ -150,6 +196,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "system-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "system-background"
           }
         }
@@ -165,6 +219,35 @@
             "Controller": "cpu",
             "Path": "foreground"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "foreground"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "HighAxPerformance",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "ax_foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "ax_foreground"
+          }
         }
       ]
     },
@@ -176,6 +259,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "foreground_window"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "foreground_window"
           }
         }
@@ -191,6 +282,23 @@
             "Controller": "cpu",
             "Path": "top-app"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "SetAttribute",
+          "Params":
+          {
+            "Name": "UClampMin",
+            "Value": "1",
+            "Optional": "true"
+          }
         }
       ]
     },
@@ -202,6 +310,14 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "rt"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "rt"
           }
         }
@@ -230,6 +346,14 @@
             "Controller": "cpu",
             "Path": "camera-daemon"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "camera-daemon"
+          }
         }
       ]
     },
@@ -243,6 +367,14 @@
             "Controller": "cpu",
             "Path": "nnapi-hal"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "nnapi-hal"
+          }
         }
       ]
     },
@@ -254,6 +386,22 @@
           "Params":
           {
             "Controller": "cpu",
+            "Path": "dex2oat"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "dex2oat"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
             "Path": "dex2oat"
           }
         }
@@ -388,6 +536,30 @@
             "Controller": "cpuset",
             "Path": "background"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": "background"
+          }
         }
       ]
     },
@@ -414,6 +586,30 @@
             "Controller": "cpuset",
             "Path": "foreground"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
         }
       ]
     },
@@ -427,6 +623,58 @@
             "Controller": "cpuset",
             "Path": "foreground_window"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "foreground_window"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "ProcessAxCapacityHigh",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "ax_foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "ax_foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "ax_foreground"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
+        },
+        {
+          "Name": "SetTimerSlack",
+          "Params":
+          {
+            "Slack": "10000000"
+          }
         }
       ]
     },
@@ -439,6 +687,30 @@
           {
             "Controller": "cpuset",
             "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
           }
         }
       ]
@@ -454,6 +726,22 @@
             "Controller": "cpuset",
             "Path": "system-background"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "system-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "system-background"
+          }
         }
       ]
     },
@@ -465,6 +753,22 @@
           "Params":
           {
             "Controller": "cpuset",
+            "Path": "restricted"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "restricted"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "restricted"
           }
         }
@@ -479,6 +783,22 @@
           "Params":
           {
             "Controller": "cpuset",
+            "Path": "camera-daemon"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "camera-daemon"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
             "Path": "camera-daemon"
           }
         }
@@ -544,7 +864,7 @@
           "Name": "SetTimerSlack",
           "Params":
           {
-            "Slack": "40000000"
+            "Slack": "10000000"
           }
         }
       ]
@@ -570,7 +890,23 @@
           "Params":
           {
             "Controller": "cpuset",
-            "Path": "system-background"
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "top-app"
           }
         }
       ]
@@ -583,7 +919,114 @@
           "Params":
           {
             "Controller": "cpuset",
-            "Path": "system-background"
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "top-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "top-app"
+          }
+        }
+      ]
+    },
+
+    {
+      "Name": "AudioProcessPolicy",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
+        }
+      ]
+    },
+
+    {
+      "Name": "AudioPolicy",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "audio-app"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
+        },
+        {
+          "Name": "SetSchedulerPolicy",
+          "Params":
+          {
+            "Policy": "SCHED_OTHER",
+            "Nice": "-16"
+          }
+        },
+        {
+          "Name": "SetTimerSlack",
+          "Params":
+          {
+            "Slack": "50000"
           }
         }
       ]
@@ -680,6 +1123,171 @@
           }
         }
       ]
+    },
+    {
+      "Name": "CpuSetLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "l-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuSetHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "h-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "BlkIoLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "BlkIoHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlLBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "l-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "l-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlHBackground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "h-background"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "h-background"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuctlSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "systemui"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "systemui"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "CpuSetSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "systemui"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "systemui"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "SchedtuneSystemUI",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "systemui"
+          }
+        }
+      ]
     }
   ],
 
@@ -701,6 +1309,10 @@
       "Profiles": [ "HighPerformanceWI", "HighIoPriority", "TimerSlackNormal" ]
     },
     {
+      "Name": "SCHED_SP_AUDIO",
+      "Profiles": [ "AudioPolicy" ]
+    },
+    {
       "Name": "SCHED_SP_TOP_APP",
       "Profiles": [ "MaxPerformance", "MaxIoPriority", "TimerSlackNormal" ]
     },
@@ -715,6 +1327,10 @@
     {
       "Name": "SCHED_SP_RT_APP",
       "Profiles": [ "RealtimePerformance", "MaxIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "SCHED_SP_AX_FG",
+      "Profiles": [ "HighAxPerformance" ]
     },
     {
       "Name": "CPUSET_SP_DEFAULT",
@@ -759,6 +1375,38 @@
     {
       "Name": "InputPolicy",
       "Profiles": [ "RealTimeInputScheduling", "MaxPerformance", "ProcessCapacityMax", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "CPUSET_SP_AX_FOREGROUND",
+      "Profiles": [ "ProcessAxCapacityHigh" ]
+    },
+    {
+      "Name": "CPUSET_SP_AUDIO",
+      "Profiles": [ "AudioProcessPolicy" ]
+    },
+    {
+      "Name": "CPUSET_SP_LBACKGROUND",
+      "Profiles": [ "CpuSetLBackground", "BlkIoLBackground", "CpuctlLBackground", "TimerSlackHigh" ]
+    },
+    {
+      "Name": "CPUSET_SP_HBACKGROUND",
+      "Profiles": [ "CpuSetHBackground", "BlkIoHBackground", "CpuctlHBackground", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "SCHED_SP_SYSTEMUI",
+      "Profiles": [ "CpuctlSystemUI", "SchedtuneSystemUI", "HighIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "CPUSET_SP_SYSTEMUI",
+      "Profiles": [ "CpuSetSystemUI", "CpuctlSystemUI", "MaxIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "SCHED_SP_LBACKGROUND",
+      "Profiles": [ "CpuctlLBackground", "BlkIoLBackground" ]
+    },
+    {
+      "Name": "SCHED_SP_HBACKGROUND",
+      "Profiles": [ "CpuctlHBackground", "BlkIoHBackground" ]
     }
   ]
 }
