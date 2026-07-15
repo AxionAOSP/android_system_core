@@ -64,6 +64,7 @@
 
 #include "action.h"
 #include "action_manager.h"
+#include "ax_ram_plus.h"
 #include "builtin_arguments.h"
 #include "init.h"
 #include "mount_namespace.h"
@@ -980,6 +981,7 @@ static void DoReboot(unsigned int cmd, const std::string& reason,
         LOG(INFO) << "sync() before umount took" << sync_timer;
     }
     // 5. drop caches and disable zram backing device, if exist
+    DisableRamPlusSwap();
     KillZramBackingDevice();
 
     LOG(INFO) << "Ready to unmount apexes. So far shutdown sequence took " << t;
