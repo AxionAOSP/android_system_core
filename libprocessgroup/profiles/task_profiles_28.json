@@ -157,6 +157,63 @@
       ]
     },
     {
+      "Name": "SvpPolicy",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "svp"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
+        },
+        {
+          "Name": "SetTimerSlack",
+          "Params":
+          {
+            "Slack": "50000"
+          }
+        },
+        {
+          "Name": "SetAttribute",
+          "Params":
+          {
+            "Name": "STuneBoost",
+            "Value": "100"
+          }
+        },
+        {
+          "Name": "SetAttribute",
+          "Params":
+          {
+            "Name": "STunePreferIdle",
+            "Value": "1"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "SvpSched",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "svp"
+          }
+        }
+      ]
+    },
+    {
       "Name": "HighAxPerformance",
       "Actions": [
         {
@@ -204,47 +261,8 @@
           "Name": "JoinCgroup",
           "Params":
           {
-            "Controller": "cpuset",
-            "Path": "audio-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "cpu",
-            "Path": "audio-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
             "Controller": "schedtune",
             "Path": "audio-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "blkio",
-            "Path": ""
-          }
-        },
-        {
-          "Name": "SetSchedulerPolicy",
-          "Params":
-          {
-            "Policy": "SCHED_OTHER",
-            "Nice": "-16"
-          }
-        },
-        {
-          "Name": "SetTimerSlack",
-          "Params":
-          {
-            "Slack": "50000"
           }
         }
       ]

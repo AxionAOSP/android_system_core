@@ -26,9 +26,9 @@
       "File": "ax_foreground/cpus"
     },
     {
-      "Name": "SystemUICPUs",
+      "Name": "SvpCPUs",
       "Controller": "cpuset",
-      "File": "systemui/cpus"
+      "File": "svp/cpus"
     },
     {
       "Name": "AudioCPUs",
@@ -717,6 +717,106 @@
     },
 
     {
+      "Name": "SvpPolicy",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "svp"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "svp"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "svp"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "blkio",
+            "Path": ""
+          }
+        },
+        {
+          "Name": "SetTimerSlack",
+          "Params":
+          {
+            "Slack": "50000"
+          }
+        },
+        {
+          "Name": "SetAttribute",
+          "Params":
+          {
+            "Name": "UClampMin",
+            "Value": "100",
+            "Optional": "true"
+          }
+        },
+        {
+          "Name": "SetAttribute",
+          "Params":
+          {
+            "Name": "UClampMax",
+            "Value": "100",
+            "Optional": "true"
+          }
+        },
+        {
+          "Name": "SetSchedulerPolicy",
+          "Params":
+          {
+            "Policy": "SCHED_RR",
+            "Priority": "1"
+          }
+        },
+        {
+          "Name": "SetAttribute",
+          "Params":
+          {
+            "Name": "UClampLatencySensitive",
+            "Value": "1",
+            "Optional": "true"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "SvpSched",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "svp"
+          }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "schedtune",
+            "Path": "svp"
+          }
+        }
+      ]
+    },
+    {
       "Name": "ServiceCapacityLow",
       "Actions": [
         {
@@ -897,14 +997,6 @@
           "Name": "JoinCgroup",
           "Params":
           {
-            "Controller": "cpu",
-            "Path": "top-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
             "Controller": "schedtune",
             "Path": "top-app"
           }
@@ -926,54 +1018,8 @@
           "Name": "JoinCgroup",
           "Params":
           {
-            "Controller": "cpu",
-            "Path": "top-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
             "Controller": "schedtune",
             "Path": "top-app"
-          }
-        }
-      ]
-    },
-
-    {
-      "Name": "AudioProcessPolicy",
-      "Actions": [
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "cpuset",
-            "Path": "audio-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "cpu",
-            "Path": "audio-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "schedtune",
-            "Path": "audio-app"
-          }
-        },
-        {
-          "Name": "JoinCgroup",
-          "Params":
-          {
-            "Controller": "blkio",
-            "Path": ""
           }
         }
       ]
@@ -995,7 +1041,7 @@
           "Params":
           {
             "Controller": "cpu",
-            "Path": "audio-app"
+            "Path": "foreground"
           }
         },
         {
@@ -1333,6 +1379,10 @@
       "Profiles": [ "HighAxPerformance" ]
     },
     {
+      "Name": "SCHED_SP_SVP",
+      "Profiles": [ "SvpSched" ]
+    },
+    {
       "Name": "CPUSET_SP_DEFAULT",
       "Profiles": [ "TimerSlackNormal" ]
     },
@@ -1377,12 +1427,16 @@
       "Profiles": [ "RealTimeInputScheduling", "MaxPerformance", "ProcessCapacityMax", "TimerSlackNormal" ]
     },
     {
+      "Name": "CPUSET_SP_SVP",
+      "Profiles": [ "SvpPolicy" ]
+    },
+    {
       "Name": "CPUSET_SP_AX_FOREGROUND",
       "Profiles": [ "ProcessAxCapacityHigh" ]
     },
     {
       "Name": "CPUSET_SP_AUDIO",
-      "Profiles": [ "AudioProcessPolicy" ]
+      "Profiles": [ "HighPerformance", "AudioPolicy", "HighIoPriority", "TimerSlackNormal" ]
     },
     {
       "Name": "CPUSET_SP_LBACKGROUND",
