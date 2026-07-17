@@ -26,6 +26,7 @@
 #include <sys/time.h>
 #include <termios.h>
 #include <unistd.h>
+#include <algorithm>
 #include <thread>
 
 #include <android-base/file.h>
@@ -41,6 +42,7 @@
 #include <sys/signalfd.h>
 
 #include <string>
+#include <string_view>
 
 #include "interprocess_fifo.h"
 #include "lmkd_service.h"
@@ -75,6 +77,20 @@ using android::base::WriteStringToFile;
 
 namespace android {
 namespace init {
+
+static bool IsVendorHardwareServicePath(std::string_view path) {
+    return StartsWith(path, "/vendor/bin/hw/") || StartsWith(path, "/odm/bin/hw/") ||
+           StartsWith(path, "/system/vendor/bin/hw/");
+}
+
+static bool IsDisplayServicePath(std::string_view path) {
+    return IsVendorHardwareServicePath(path) &&
+           (path.find("hardware.display.allocator") != std::string_view::npos ||
+            path.find("hardware.display.composer") != std::string_view::npos ||
+            path.find("graphics.allocator") != std::string_view::npos ||
+            path.find("graphics.composer") != std::string_view::npos ||
+            path.find("hardware.composer") != std::string_view::npos);
+}
 
 static Result<std::string> ComputeContextFromExecutable(const std::string& service_path) {
     std::string computed_context;
@@ -563,15 +579,19 @@ void Service::RunService(const std::vector<Descriptor>& descriptors,
         _exit(EXIT_FAILURE);
     }
 
-    if (task_profiles_.size() > 0) {
+    std::vector<std::string> task_profiles = task_profiles_;
+    if (!args_.empty() && IsDisplayServicePath(args_[0])) {
+        task_profiles.emplace_back("CPUSET_SP_FOREGROUND_WINDOW");
+    }
+    if (!task_profiles.empty()) {
         bool succeeded = SelinuxGetVendorAndroidVersion() < __ANDROID_API_U__
                                  ?
                                  // Compatibility mode: apply the task profiles to the current
                                  // thread.
-                                 SetTaskProfiles(getpid(), task_profiles_)
+                                 SetTaskProfiles(getpid(), task_profiles)
                                  :
                                  // Apply the task profiles to the current process.
-                                 SetProcessProfiles(getuid(), getpid(), task_profiles_);
+                                 SetProcessProfiles(getuid(), getpid(), task_profiles);
         if (!succeeded) {
             LOG(ERROR) << "failed to set task profiles";
         }

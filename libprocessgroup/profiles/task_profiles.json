@@ -6,6 +6,16 @@
       "File": "background/cpus"
     },
     {
+      "Name": "lLowCapacityCPUs",
+      "Controller": "cpuset",
+      "File": "l-background/cpus"
+    },
+    {
+      "Name": "hLowCapacityCPUs",
+      "Controller": "cpuset",
+      "File": "h-background/cpus"
+    },
+    {
       "Name": "HighCapacityCPUs",
       "Controller": "cpuset",
       "File": "foreground/cpus"
@@ -1343,6 +1353,10 @@
     {
       "Name": "SCHED_SP_FOREGROUND_WINDOW",
       "Profiles": [ "HighPerformanceWI", "HighIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "SCHED_SP_AUDIO",
+      "Profiles": [ "AudioPolicy" ]
     },
     {
       "Name": "SCHED_SP_TOP_APP",

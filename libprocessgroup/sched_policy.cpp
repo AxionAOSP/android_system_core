@@ -339,7 +339,7 @@ const char* get_sched_policy_profile_name(SchedPolicy policy) {
      */
     static constexpr const char* kSchedProfiles[SP_CNT + 1] = {
             "SCHED_SP_DEFAULT",      "SCHED_SP_BACKGROUND", "SCHED_SP_FOREGROUND",
-            "SCHED_SP_SYSTEM",       "SCHED_SP_FOREGROUND", "SCHED_SP_FOREGROUND",
+            "SCHED_SP_SYSTEM",       "SCHED_SP_AUDIO",      "SCHED_SP_AUDIO",
             "SCHED_SP_TOP_APP",      "SCHED_SP_RT_APP",     "SCHED_SP_DEFAULT",
             "SCHED_SP_FOREGROUND_WINDOW", "SCHED_SP_TOP_APP", "SCHED_SP_FOREGROUND",
             "SCHED_SP_LBACKGROUND", "SCHED_SP_HBACKGROUND",
