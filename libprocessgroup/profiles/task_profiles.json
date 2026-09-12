@@ -646,6 +646,30 @@
       ]
     },
     {
+      "Name": "CPUSET_SP_AX_FOREGROUND",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params": {
+            "Controller": "cpuset",
+            "Path": "ax_foreground"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "ProcessCapacityAxForeground",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params": {
+            "Controller": "cpuset",
+            "Path": "ax_foreground"
+          }
+        }
+      ]
+    },
+    {
       "Name": "CompactFull",
       "Actions": [
         {
@@ -701,6 +725,10 @@
       "Profiles": [ "HighPerformanceWI", "HighIoPriority", "TimerSlackNormal" ]
     },
     {
+      "Name": "SCHED_SP_AX_FOREGROUND",
+      "Profiles": [ "HighPerformance", "HighIoPriority", "TimerSlackNormal" ]
+    },
+    {
       "Name": "SCHED_SP_TOP_APP",
       "Profiles": [ "MaxPerformance", "MaxIoPriority", "TimerSlackNormal" ]
     },
@@ -731,6 +759,10 @@
     {
       "Name": "CPUSET_SP_FOREGROUND_WINDOW",
       "Profiles": [ "HighPerformanceWI", "ProcessCapacityHighWI", "HighIoPriority", "TimerSlackNormal" ]
+    },
+    {
+      "Name": "CPUSET_SP_AX_FOREGROUND",
+      "Profiles": [ "ProcessCapacityAxForeground", "TimerSlackNormal" ]
     },
     {
       "Name": "CPUSET_SP_TOP_APP",
