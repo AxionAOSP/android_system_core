@@ -1313,6 +1313,9 @@ on property:sys.boot_completed=1
 on property:sys.sysctl.extra_free_kbytes=*
     exec_background -- /system/bin/extra_free_kbytes.sh ${sys.sysctl.extra_free_kbytes}
 
+on property:persist.sys.ax_mem.swappiness=*
+    write /proc/sys/vm/swappiness ${persist.sys.ax_mem.swappiness}
+
 # Allow users to drop caches
 on property:perf.drop_caches=3
     write /proc/sys/vm/drop_caches 3
