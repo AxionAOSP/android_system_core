@@ -1400,3 +1400,6 @@ on property:sys.snapshotctl.map=requested
 on property:sys.snapshotctl.unmap=requested
     exec - root root system -- /system/bin/snapshotctl unmap
     setprop sys.snapshotctl.unmap "finished"
+    
+on property:sys.boot_completed=* && property:persist.sys.ax_touch_boost=true && property:persist.sys.touchboost_enable=*
+    setprop persist.vendor.touch_sensitivity_mode ${persist.sys.touchboost_enable}
