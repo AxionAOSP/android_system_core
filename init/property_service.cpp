@@ -402,9 +402,11 @@ static std::optional<uint32_t> PropertySet(const std::string& name, const std::s
     } else {
         prop_info* pi = (prop_info*)__system_property_find(name.c_str());
         if (pi != nullptr) {
+            bool can_override_vbmeta = name == "ro.boot.vbmeta.digest" &&
+                socket && socket->cred().uid == AID_SYSTEM;
             // ro.* properties are actually "write-once", unless the system decides to
             if (StartsWith(name, "ro.") && !weaken_prop_override_security &&
-                !StartsWith(name, "ro.boot.vbmeta.")) {
+                !can_override_vbmeta) {
                 *error = "Read-only property was already set";
                 return {PROP_ERROR_READ_ONLY_PROPERTY};
             }
@@ -501,18 +503,11 @@ bool CheckControlPropertyPerms(const std::string& name, const std::string& value
     return CheckMacPerms(control_string_full, target_context_full, source_context.c_str(), cr);
 }
 
-static bool is_exempt(const std::string& name, const std::string& source_context) {
-    static const std::vector<std::string> exemption_list = {
-        "persist.sys.",
-        "logpersistd",
-        "ro.boot.vbmeta.",
-    };
-
-    return std::any_of(exemption_list.begin(), exemption_list.end(),
-        [&](const std::string& exempt) {
-            return name.find(exempt) != std::string::npos ||
-                   source_context.find(exempt) != std::string::npos;
-        });
+static bool is_exempt(const std::string& name, const std::string& source_context,
+                      const ucred& cr) {
+    return name == "ro.boot.vbmeta.digest" &&
+           cr.uid == AID_SYSTEM &&
+           source_context == "u:r:system_server:s0";
 }
 
 // This returns one of the enum of PROP_SUCCESS or PROP_ERROR*.
@@ -537,7 +532,7 @@ uint32_t CheckPermissions(const std::string& name, const std::string& value,
     const char* type = nullptr;
     property_info_area->GetPropertyInfo(name.c_str(), &target_context, &type);
 
-    if (!is_exempt(name, source_context) &&
+    if (!is_exempt(name, source_context, cr) &&
         !CheckMacPerms(name, target_context, source_context.c_str(), cr)) {
         *error = "SELinux permission check failed";
         return PROP_ERROR_PERMISSION_DENIED;
@@ -1248,7 +1243,6 @@ void LoadDebugProperties() {
 
     const std::pair<const char*, const char*> debug_props[] = {
         {"service.adb.root", debug_enabled ? "1" : "0"},
-        {"ro.adb.secure", debug_enabled ? "0" : "1"},
         {"ro.debuggable", debug_enabled ? "1" : "0"},
         {"ro.force.debuggable", debug_enabled ? "1" : "0"}
     };
